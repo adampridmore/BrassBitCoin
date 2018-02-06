@@ -57,21 +57,21 @@ let genesisBlock =
         hashText = (blockHash 0L "Genesis" 0L "0000" |> snd)
     }
 
-genesisBlock
-|> newBlock "a" 
-|> newBlock "b" 
-|> newBlock "c" 
-|> newBlock "d" 
-|> newBlock "e" 
-|> newBlock "f" 
-|> newBlock "g" 
-|> newBlock "h" 
-|> newBlock "i" 
-|> newBlock "i" 
-|> newBlock "i" 
-|> newBlock "i" 
+// genesisBlock
+// |> newBlock "a" 
+// |> newBlock "b" 
+// |> newBlock "c" 
+// |> newBlock "d" 
+// |> newBlock "e" 
+// |> newBlock "f" 
+// |> newBlock "g" 
+// |> newBlock "h" 
+// |> newBlock "i" 
+// |> newBlock "i" 
+// |> newBlock "i" 
+// |> newBlock "i" 
 
+let tuple a = (a, a)
 
-
-// let bytes = [|0xauy;0x4uy; 0x3uy; 0x2uy; 0xfuy|]
-// let bn =  new BigInteger(bytes)
+["a";"b"]
+|> Seq.mapFold (fun previousBlock data -> previousBlock |> newBlock data |> tuple ) genesisBlock
