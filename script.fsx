@@ -2,8 +2,6 @@ open System
 open System.Security.Cryptography
 open System.Numerics;
 
-//type Nonce = Int64
-
 type Block = {
     index :int64
     data :  string
@@ -16,14 +14,11 @@ let computeHash (b: byte[]) = b |> HashAlgorithm.Create("SHA256").ComputeHash
 let toPositiveBigInteger bytes = BigInteger(Array.concat [ bytes ; [|0x0uy|]])
 
 let hash (content : String) = 
-    let bytes = 
-        content 
-        |> System.Text.ASCIIEncoding.UTF8.GetBytes 
-        |> computeHash
-    ( (bytes |> toPositiveBigInteger), BitConverter.ToString( bytes ).Replace("-", "") )
+    let bytes = content |> System.Text.ASCIIEncoding.UTF8.GetBytes |> computeHash
+    (bytes |> toPositiveBigInteger), ( BitConverter.ToString( bytes ).Replace("-", "") )
 
-let blockHash (i:int64) data (nonce:int64) (previousBlockHash: String)  = 
-    [i |> string; data; previousBlockHash; nonce |> string]
+let blockHash (index:int64) data (nonce:int64) (previousBlockHash: String)  = 
+    [index |> string; data; previousBlockHash; nonce |> string]
     |> Seq.reduce (fun a b -> sprintf "%s %s" a b)
     |> hash
 
@@ -31,11 +26,9 @@ let isValidHash hash previousBlock = hash % ( BigInteger (previousBlock.index + 
 
 let newBlock data (previousBlock: Block) = 
     let nonce, _, hashText = 
-        //seq{0L..100L}
         Seq.initInfinite (fun i -> i |> int64)
         |> Seq.map(fun nonce -> 
             let hashValue , hashText = (blockHash (previousBlock.index + 1L) data nonce previousBlock.hashText)
-            
             nonce, hashValue, hashText)
         |> Seq.where (fun (_, hash, _) -> isValidHash hash previousBlock )
         |> Seq.head
@@ -53,7 +46,7 @@ let genesisBlock =
     let data = "Genesis";
     let previousHash = "0";
     let nonce = 0L;
-    {
+    { 
         index = index
         data = data
         previousHash = previousHash
