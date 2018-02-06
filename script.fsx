@@ -49,29 +49,25 @@ let newBlock data (previousBlock: Block) =
     }
   
 let genesisBlock =
+    let index = 1L;
+    let data = "Genesis";
+    let previousHash = "0";
+    let nonce = 0L;
     {
-        index = 1L;
-        data = "Genesis";
-        previousHash = "0000";
-        nonce = 0L;
-        hashText = (blockHash 0L "Genesis" 0L "0000" |> snd)
+        index = index
+        data = data
+        previousHash = previousHash
+        nonce = nonce
+        hashText = (blockHash 0L data 0L previousHash |> snd)
     }
-
-// genesisBlock
-// |> newBlock "a" 
-// |> newBlock "b" 
-// |> newBlock "c" 
-// |> newBlock "d" 
-// |> newBlock "e" 
-// |> newBlock "f" 
-// |> newBlock "g" 
-// |> newBlock "h" 
-// |> newBlock "i" 
-// |> newBlock "i" 
-// |> newBlock "i" 
-// |> newBlock "i" 
 
 let tuple a = (a, a)
 
-["a";"b"]
-|> Seq.mapFold (fun previousBlock data -> previousBlock |> newBlock data |> tuple ) genesisBlock
+let blockchain =
+    ["a";"b"]
+    |> List.mapFold (fun previousBlock data -> previousBlock |> newBlock data |> tuple ) genesisBlock
+    |> fst
+
+[genesisBlock] @ blockchain
+
+
