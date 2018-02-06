@@ -51,7 +51,7 @@ let genesisBlock =
         data = data
         previousHash = previousHash
         nonce = nonce
-        hashText = (blockHash 0L data 0L previousHash |> snd)
+        hashText = (blockHash index data nonce previousHash) |> snd
     }
 
 let tuple a = (a, a)
