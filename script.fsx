@@ -20,12 +20,12 @@ let hash (content : String) =
     (BigInteger(Array.concat [ bytes ; [|0x0uy|]]), BitConverter.ToString( bytes ).Replace("-", "") )
 
 let blockHash (i:int64) data (nonce:int64) (previousBlockHash: String)  = 
-    [i |> string; data;previousBlockHash;nonce |> string]
+    [i |> string; data; previousBlockHash; nonce |> string]
     |> Seq.reduce (fun a b -> sprintf "%s %s" a b)
     |> hash
 
 let isValidHash hash previousBlock = 
-    printfn "%A %A" hash previousBlock.index;
+    //printfn "%A %A" hash previousBlock.index;
     hash % ( BigInteger (previousBlock.index) ) = BigInteger.Zero
 
 let newBlock data (previousBlock: Block) = 
@@ -69,5 +69,6 @@ let blockchain =
     |> fst
 
 [genesisBlock] @ blockchain
+
 
 
