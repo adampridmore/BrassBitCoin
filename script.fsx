@@ -12,19 +12,22 @@ type Block = {
     hashText : string
 }
 
+let computeHash (b: byte[]) = b |> HashAlgorithm.Create("SHA256").ComputeHash
+let toPositiveBigInteger bytes = BigInteger(Array.concat [ bytes ; [|0x0uy|]])
+
 let hash (content : String) = 
     let bytes = 
         content 
         |> System.Text.ASCIIEncoding.UTF8.GetBytes 
-        |> HashAlgorithm.Create("SHA256").ComputeHash
-    (BigInteger(Array.concat [ bytes ; [|0x0uy|]]), BitConverter.ToString( bytes ).Replace("-", "") )
+        |> computeHash
+    ( (bytes |> toPositiveBigInteger), BitConverter.ToString( bytes ).Replace("-", "") )
 
 let blockHash (i:int64) data (nonce:int64) (previousBlockHash: String)  = 
     [i |> string; data; previousBlockHash; nonce |> string]
     |> Seq.reduce (fun a b -> sprintf "%s %s" a b)
     |> hash
 
-let isValidHash hash previousBlock = hash % ( BigInteger (previousBlock.index) ) = BigInteger.Zero
+let isValidHash hash previousBlock = hash % ( BigInteger (previousBlock.index + 1L) ) = BigInteger.Zero
 
 let newBlock data (previousBlock: Block) = 
     let nonce, _, hashText = 
@@ -68,7 +71,7 @@ let tuple a = (a, a)
 // [genesisBlock] @ blockchain
 
 let print x = x |> printfn "%A";x
-let numbeOfBlocksToGenerate = 5000
+let numbeOfBlocksToGenerate = 50
 let blockchain2 =
     Seq.initInfinite id
     |> Seq.take numbeOfBlocksToGenerate
