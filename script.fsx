@@ -24,13 +24,12 @@ let blockHash (i:int64) data (nonce:int64) (previousBlockHash: String)  =
     |> Seq.reduce (fun a b -> sprintf "%s %s" a b)
     |> hash
 
-let isValidHash hash previousBlock = 
-    //printfn "%A %A" hash previousBlock.index;
-    hash % ( BigInteger (previousBlock.index) ) = BigInteger.Zero
+let isValidHash hash previousBlock = hash % ( BigInteger (previousBlock.index) ) = BigInteger.Zero
 
 let newBlock data (previousBlock: Block) = 
     let nonce, _, hashText = 
-        seq{0L..100L}
+        //seq{0L..100L}
+        Seq.initInfinite (fun i -> i |> int64)
         |> Seq.map(fun nonce -> 
             let hashValue , hashText = (blockHash (previousBlock.index + 1L) data nonce previousBlock.hashText)
             
@@ -61,12 +60,27 @@ let genesisBlock =
 
 let tuple a = (a, a)
 
-let blockchain =
-    ["a";"b"]
-    |> List.mapFold (fun previousBlock data -> previousBlock |> newBlock data |> tuple ) genesisBlock
-    |> fst
+// let blockchain =
+//     ["a";"b"]
+//     |> List.mapFold (fun previousBlock data -> previousBlock |> newBlock data |> tuple ) genesisBlock
+//     |> fst
 
-[genesisBlock] @ blockchain
+// [genesisBlock] @ blockchain
+
+let print x = x |> printfn "%A";x
+let numbeOfBlocksToGenerate = 5000
+let blockchain2 =
+    Seq.initInfinite id
+    |> Seq.take numbeOfBlocksToGenerate
+    |> Seq.map string
+    |> Seq.toList
+    |> Seq.mapFold (fun previousBlock data -> previousBlock |> newBlock data |> print |> tuple ) genesisBlock
+    |> fst
+    |> Seq.toList
+
+//#time "on"
+blockchain2
+|> Seq.iter (printfn "%A")
 
 
 
