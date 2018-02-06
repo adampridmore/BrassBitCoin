@@ -35,8 +35,6 @@ let newBlock data (previousBlock: Block) =
             let hashValue , hashText = (blockHash (previousBlock.index + 1L) data nonce previousBlock.hashText)
             
             nonce, hashValue, hashText)
-        //|> Seq.map (fun (a, b, c) -> printfn "%A" b; (a,b,c))
-        // This where / hash value check doesn't seem to work?
         |> Seq.where (fun (_, hash, _) -> isValidHash hash previousBlock )
         |> Seq.head
             
