@@ -4,10 +4,15 @@ open System.Numerics;
 
 type Block = {
     index :int64
+    owner: string
     data :  string
     previousHash : string
     nonce: int64
-    hashText : string
+}
+
+type BlockWithHash = {
+    block: Block;
+    hashText: string
 }
 
 let computeHash (b: byte[]) = b |> HashAlgorithm.Create("SHA256").ComputeHash
@@ -17,41 +22,55 @@ let hash (content : String) =
     let bytes = content |> System.Text.ASCIIEncoding.UTF8.GetBytes |> computeHash
     (bytes |> toPositiveBigInteger), ( BitConverter.ToString( bytes ).Replace("-", "") )
 
-let blockHash (index:int64) data (nonce:int64) (previousBlockHash: String)  = 
-    [index |> string; data; previousBlockHash; nonce |> string]
+let blockHash (block: Block) = 
+    [block.index |> string; block.owner; block.data; block.previousHash; block.nonce |> string]
     |> Seq.reduce (fun a b -> sprintf "%s %s" a b)
     |> hash
 
-let isValidHash hash previousBlock = hash % ( BigInteger (previousBlock.index + 1L) ) = BigInteger.Zero
+let isValidHash hash (previousBlock: BlockWithHash) = hash % ( BigInteger (previousBlock.block.index + 1L) ) = BigInteger.Zero
 
-let newBlock data (previousBlock: Block) = 
+let newBlock owner data (previousBlock: BlockWithHash) = 
     let nonce, _, hashText = 
         Seq.initInfinite (fun i -> i |> int64)
         |> Seq.map(fun nonce -> 
-            let hashValue , hashText = (blockHash (previousBlock.index + 1L) data nonce previousBlock.hashText)
+            let block = {
+                index = (previousBlock.block.index + 1L)
+                owner = owner
+                data = data
+                nonce = nonce
+                previousHash = previousBlock.hashText
+            }
+
+            let hashValue , hashText =  block |> blockHash
             nonce, hashValue, hashText)
         |> Seq.where (fun (_, hash, _) -> isValidHash hash previousBlock )
         |> Seq.head
             
-    {
-        index = previousBlock.index + 1L;
+    let block = {
+        index = previousBlock.block.index + 1L;
+        owner = owner;
         data = data;
         nonce = nonce;
         previousHash = previousBlock.hashText;
+    }
+
+    {
+        block = block;
         hashText = hashText
     }
   
 let genesisBlock =
-    let index = 1L;
-    let data = "Genesis";
-    let previousHash = "0";
-    let nonce = 0L;
+    let block = {
+        index = 1L;
+        owner = "Genesis"
+        data = "Genesis";
+        previousHash = "0";
+        nonce = 0L;
+    }
+
     { 
-        index = index
-        data = data
-        previousHash = previousHash
-        nonce = nonce
-        hashText = (blockHash index data nonce previousHash) |> snd
+        block = block
+        hashText = (blockHash block) |> snd
     }
 
 let tuple a = (a, a)
@@ -70,7 +89,7 @@ let blockchain2 =
     |> Seq.take numbeOfBlocksToGenerate
     |> Seq.map string
     |> Seq.toList
-    |> Seq.mapFold (fun previousBlock data -> previousBlock |> newBlock data |> print |> tuple ) genesisBlock
+    |> Seq.mapFold (fun previousBlock data -> previousBlock |> newBlock "Adam" data |> print |> tuple ) genesisBlock
     |> fst
     |> Seq.toList
 
@@ -79,4 +98,17 @@ blockchain2
 |> Seq.iter (printfn "%A")
 
 
+let init = ([1;2;3] |> List.toSeq )
+
+let fib init =
+    Seq.concat [init;
+        Seq.unfold (fun state -> 
+            let next = state |> Seq.sum
+            Some(next, Seq.append (state |> Seq.skip(1)) [next] ) ) init
+    ]
+          
+   
+init 
+|> fib
+|> Seq.take 10
 
