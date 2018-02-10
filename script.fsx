@@ -4,7 +4,7 @@ open System.Numerics;
 
 type Block = {
     index :int64
-    owner: string
+    minedBy: string
     data :  string
     previousHash : string
     nonce: int64
@@ -23,19 +23,19 @@ let hash (content : String) =
     (bytes |> toPositiveBigInteger), ( BitConverter.ToString( bytes ).Replace("-", "") )
 
 let blockHash (block: Block) = 
-    [block.index |> string; block.owner; block.data; block.previousHash; block.nonce |> string]
+    [block.index |> string; block.minedBy; block.data; block.previousHash; block.nonce |> string]
     |> Seq.reduce (fun a b -> sprintf "%s %s" a b)
     |> hash
 
 let isValidHash hash (previousBlock: BlockWithHash) = hash % ( BigInteger (previousBlock.block.index + 1L) ) = BigInteger.Zero
 
-let newBlock owner data (previousBlock: BlockWithHash) = 
+let newBlock minedBy data (previousBlock: BlockWithHash) = 
     let nonce, _, hashText = 
         Seq.initInfinite (fun i -> i |> int64)
         |> Seq.map(fun nonce -> 
             let block = {
                 index = (previousBlock.block.index + 1L)
-                owner = owner
+                minedBy = minedBy
                 data = data
                 nonce = nonce
                 previousHash = previousBlock.hashText
@@ -48,7 +48,7 @@ let newBlock owner data (previousBlock: BlockWithHash) =
             
     let block = {
         index = previousBlock.block.index + 1L;
-        owner = owner;
+        minedBy = minedBy;
         data = data;
         nonce = nonce;
         previousHash = previousBlock.hashText;
@@ -62,7 +62,7 @@ let newBlock owner data (previousBlock: BlockWithHash) =
 let genesisBlock =
     let block = {
         index = 1L;
-        owner = "Genesis"
+        minedBy = "Genesis"
         data = "Genesis";
         previousHash = "0";
         nonce = 0L;
