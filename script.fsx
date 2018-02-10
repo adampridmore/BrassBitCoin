@@ -12,7 +12,7 @@ type Block = {
 
 type BlockWithHash = {
     block: Block;
-    hashText: string
+    hash: string
 }
 
 let computeHash (b: byte[]) = b |> HashAlgorithm.Create("SHA256").ComputeHash
@@ -30,7 +30,7 @@ let blockHash (block: Block) =
 let isValidHash hash (previousBlock: BlockWithHash) = hash % ( BigInteger (previousBlock.block.index + 1L) ) = BigInteger.Zero
 
 let newBlock minedBy data (previousBlock: BlockWithHash) = 
-    let nonce, _, hashText = 
+    let nonce, _, hash = 
         Seq.initInfinite (fun i -> i |> int64)
         |> Seq.map(fun nonce -> 
             let block = {
@@ -38,11 +38,11 @@ let newBlock minedBy data (previousBlock: BlockWithHash) =
                 minedBy = minedBy
                 data = data
                 nonce = nonce
-                previousHash = previousBlock.hashText
+                previousHash = previousBlock.hash
             }
 
-            let hashValue , hashText =  block |> blockHash
-            nonce, hashValue, hashText)
+            let hashValue , hash =  block |> blockHash
+            nonce, hashValue, hash)
         |> Seq.where (fun (_, hash, _) -> isValidHash hash previousBlock )
         |> Seq.head
             
@@ -51,12 +51,12 @@ let newBlock minedBy data (previousBlock: BlockWithHash) =
         minedBy = minedBy;
         data = data;
         nonce = nonce;
-        previousHash = previousBlock.hashText;
+        previousHash = previousBlock.hash;
     }
 
     {
         block = block;
-        hashText = hashText
+        hash = hash
     }
   
 let genesisBlock =
@@ -70,7 +70,7 @@ let genesisBlock =
 
     { 
         block = block
-        hashText = (blockHash block) |> snd
+        hash = (blockHash block) |> snd
     }
 
 let tuple a = (a, a)
@@ -110,5 +110,5 @@ let fib init =
    
 init 
 |> fib
-|> Seq.take 10
+|> Seq.take 2
 
