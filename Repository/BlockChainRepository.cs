@@ -6,30 +6,31 @@ namespace Repository
 {
     public class BlockChainRepository
     {
+        private readonly IMongoCollection<Block> _collection;
+
+        public BlockChainRepository(string mongoUrl)
+        {
+            var url = new MongoDB.Driver.MongoUrl(mongoUrl);
+            var client = new MongoDB.Driver.MongoClient(url);
+            var database = client.GetDatabase(url.DatabaseName);
+            _collection = database.GetCollection<Block>("blockChain");
+        }
+
         public void Save(Block block)
         {
-            MongoDB.Driver.IMongoCollection<Block> collection = GetCollection();
+            var collection = _collection;
 
             collection.InsertOne(block);
         }
-        
+
         internal IList<Block> GetAll()
         {
-            return GetCollection().FindSync(FilterDefinition<Block>.Empty).ToList();
+            return _collection.FindSync(FilterDefinition<Block>.Empty).ToList();
         }
 
         internal void DeleteAll()
         {
-            GetCollection().DeleteMany(FilterDefinition<Block>.Empty);
-        }
-        
-        private static MongoDB.Driver.IMongoCollection<Block> GetCollection()
-        {
-            var url = new MongoDB.Driver.MongoUrl("mongodb://localhost/BlockChain");
-            var client = new MongoDB.Driver.MongoClient(url);
-            var database = client.GetDatabase(url.DatabaseName);
-            var collection = database.GetCollection<Block>("blockChain");
-            return collection;
+            _collection.DeleteMany(FilterDefinition<Block>.Empty);
         }
     }
 }

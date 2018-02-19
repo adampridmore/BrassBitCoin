@@ -12,10 +12,11 @@ namespace MyFirstUnitTests
     // }
     public class BlockChainRepositoryTests
     {
+        private readonly string _url = "mongodb://localhost/BlockChainTest";
         private BlockChainRepository repository;
         public BlockChainRepositoryTests()
         {
-            repository = new BlockChainRepository();
+            repository = new BlockChainRepository(_url);
             repository.DeleteAll();
         }
 
