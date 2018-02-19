@@ -27,7 +27,7 @@ let blockHash (block: Block) =
     |> Seq.reduce (fun a b -> sprintf "%s %s" a b)
     |> hash
 
-let isValidHash hash (previousBlock: BlockWithHash) = hash % ( BigInteger (previousBlock.block.index + 1L) ) = BigInteger.Zero
+let isValidHash hash (previousBlock: BlockWithHash) = hash % ( BigInteger (1000000L) ) = BigInteger.Zero
 
 let newBlock minedBy data (previousBlock: BlockWithHash) = 
     let nonce, _, hash = 
@@ -75,15 +75,8 @@ let genesisBlock =
 
 let tuple a = (a, a)
 
-// let blockchain =
-//     ["a";"b"]
-//     |> List.mapFold (fun previousBlock data -> previousBlock |> newBlock data |> tuple ) genesisBlock
-//     |> fst
-
-// [genesisBlock] @ blockchain
-
 let print x = x |> printfn "%A";x
-let numbeOfBlocksToGenerate = 50
+let numbeOfBlocksToGenerate = 500
 let blockchain2 =
     Seq.initInfinite id
     |> Seq.take numbeOfBlocksToGenerate
@@ -96,19 +89,4 @@ let blockchain2 =
 //#time "on"
 blockchain2
 |> Seq.iter (printfn "%A")
-
-
-let init = ([1;2;3] |> List.toSeq )
-
-let fib init =
-    Seq.concat [init;
-        Seq.unfold (fun state -> 
-            let next = state |> Seq.sum
-            Some(next, Seq.append (state |> Seq.skip(1)) [next] ) ) init
-    ]
-          
-   
-init 
-|> fib
-|> Seq.take 2
 
