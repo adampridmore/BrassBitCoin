@@ -9,9 +9,15 @@ namespace BlockChainWeb.Pages
 {
     public class IndexModel : PageModel
     {
+        private readonly string _url = "mongodb://localhost/BlockChain";
+
+        public IList<Repository.Block> AllBlocks {get;set;}
+
         public void OnGet()
         {
+            var repository = new Repository.BlockChainRepository(_url);
 
+            AllBlocks = repository.GetAll();
         }
     }
 }

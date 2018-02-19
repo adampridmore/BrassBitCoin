@@ -14,6 +14,6 @@ namespace Repository
         {
         }
 
-        public int index { get; set; }
+        public int Index { get; set; }
     }
 }

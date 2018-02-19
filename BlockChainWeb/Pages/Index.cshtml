@@ -106,3 +106,13 @@
         </ul>
     </div>
 </div>
+
+<div class="row">
+    @foreach (var block in Model.AllBlocks)
+    {
+        <p>
+            BlockIndex: @block.Index
+        </p>        
+    
+    }
+</div>

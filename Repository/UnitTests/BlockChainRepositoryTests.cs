@@ -36,7 +36,7 @@ namespace MyFirstUnitTests
         {
             var block = new Block()
             {
-                index = 10
+                Index = 10
             };
 
             repository.Save(block);
@@ -44,7 +44,7 @@ namespace MyFirstUnitTests
             var allBlocks = repository.GetAll();
 
             Assert.Equal(1, allBlocks.Count);
-            Assert.Equal(10, allBlocks[0].index);
+            Assert.Equal(10, allBlocks[0].Index);
         }
     }
 }

@@ -23,12 +23,12 @@ namespace Repository
             collection.InsertOne(block);
         }
 
-        internal IList<Block> GetAll()
+        public IList<Block> GetAll()
         {
             return _collection.FindSync(FilterDefinition<Block>.Empty).ToList();
         }
 
-        internal void DeleteAll()
+        public void DeleteAll()
         {
             _collection.DeleteMany(FilterDefinition<Block>.Empty);
         }
