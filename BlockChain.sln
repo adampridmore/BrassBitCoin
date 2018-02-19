@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "BlockChain", "BlockChainMiner\BlockChain.fsproj", "{47F7FB32-36D7-419D-A9C0-0E5BC3012D5F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlockChainWeb", "BlockChainWeb\BlockChainWeb.csproj", "{3737F298-3336-44B5-8804-79EC65B357C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{3740F138-89EA-4706-889F-3AC2413397A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,29 @@ Global
 		{47F7FB32-36D7-419D-A9C0-0E5BC3012D5F}.Release|x64.Build.0 = Release|x64
 		{47F7FB32-36D7-419D-A9C0-0E5BC3012D5F}.Release|x86.ActiveCfg = Release|x86
 		{47F7FB32-36D7-419D-A9C0-0E5BC3012D5F}.Release|x86.Build.0 = Release|x86
+		{3737F298-3336-44B5-8804-79EC65B357C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3737F298-3336-44B5-8804-79EC65B357C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3737F298-3336-44B5-8804-79EC65B357C6}.Debug|x64.ActiveCfg = Debug|x64
+		{3737F298-3336-44B5-8804-79EC65B357C6}.Debug|x64.Build.0 = Debug|x64
+		{3737F298-3336-44B5-8804-79EC65B357C6}.Debug|x86.ActiveCfg = Debug|x86
+		{3737F298-3336-44B5-8804-79EC65B357C6}.Debug|x86.Build.0 = Debug|x86
+		{3737F298-3336-44B5-8804-79EC65B357C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3737F298-3336-44B5-8804-79EC65B357C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3737F298-3336-44B5-8804-79EC65B357C6}.Release|x64.ActiveCfg = Release|x64
+		{3737F298-3336-44B5-8804-79EC65B357C6}.Release|x64.Build.0 = Release|x64
+		{3737F298-3336-44B5-8804-79EC65B357C6}.Release|x86.ActiveCfg = Release|x86
+		{3737F298-3336-44B5-8804-79EC65B357C6}.Release|x86.Build.0 = Release|x86
+		{3740F138-89EA-4706-889F-3AC2413397A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3740F138-89EA-4706-889F-3AC2413397A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3740F138-89EA-4706-889F-3AC2413397A1}.Debug|x64.ActiveCfg = Debug|x64
+		{3740F138-89EA-4706-889F-3AC2413397A1}.Debug|x64.Build.0 = Debug|x64
+		{3740F138-89EA-4706-889F-3AC2413397A1}.Debug|x86.ActiveCfg = Debug|x86
+		{3740F138-89EA-4706-889F-3AC2413397A1}.Debug|x86.Build.0 = Debug|x86
+		{3740F138-89EA-4706-889F-3AC2413397A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3740F138-89EA-4706-889F-3AC2413397A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3740F138-89EA-4706-889F-3AC2413397A1}.Release|x64.ActiveCfg = Release|x64
+		{3740F138-89EA-4706-889F-3AC2413397A1}.Release|x64.Build.0 = Release|x64
+		{3740F138-89EA-4706-889F-3AC2413397A1}.Release|x86.ActiveCfg = Release|x86
+		{3740F138-89EA-4706-889F-3AC2413397A1}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 EndGlobal
