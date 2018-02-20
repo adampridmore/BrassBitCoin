@@ -22,6 +22,12 @@ namespace BlockChainWeb
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddTransient<Repository.BlockChainRepository>(delegate(IServiceProvider sp) {
+                var mongoUrlText = Configuration["ConnectionStrings:MongoDB"];
+
+                return new Repository.BlockChainRepository(mongoUrlText);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -12,18 +12,17 @@ namespace BlockChainWeb.Controllers
     public class HomeController : Controller
     {
         private IConfiguration _configuration;
+        private readonly Repository.BlockChainRepository _repository;
 
-        public HomeController(IConfiguration Configuration)
+        public HomeController(IConfiguration Configuration, Repository.BlockChainRepository repository)
         {
             _configuration = Configuration;
+            this._repository = repository;
         }
 
         public IActionResult Index()
         {
-            var mongoUrlText =_configuration["ConnectionStrings:MongoDB"];
-
-            var repository = new Repository.BlockChainRepository(mongoUrlText);
-            var model = repository.GetAll();
+            var model = _repository.GetAll();
 
             return View(model);
         }
@@ -38,9 +37,7 @@ namespace BlockChainWeb.Controllers
         [HttpPost]
         public IActionResult ResetData()
         {
-            var repository = RepositoryFactory.GetBlockChainRepository();
-
-            repository.DeleteAll();
+            _repository.DeleteAll();
 
             var block = BlockChain.Miner.genesisBlock;
 
@@ -54,8 +51,7 @@ namespace BlockChainWeb.Controllers
                 hash = block.hash
             };
 
-
-            repository.Save(blockDto);
+            _repository.Save(blockDto);
                 
             return Redirect("~/Home/About");
         }

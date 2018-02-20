@@ -1,8 +1,8 @@
 #load "block.fs"
 #load "miner.fs"
 
-open Block
-open Miner
+open BlockChain.Types
+open BlockChain.Miner
 let numbeOfBlocksToGenerate = 5
 
 //#time "on"
