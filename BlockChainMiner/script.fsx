@@ -1,6 +1,5 @@
 open System
 open System.Security.Cryptography
-open System.Numerics;
 
 type Block = {
     index :int64
@@ -16,21 +15,18 @@ type BlockWithHash = {
 }
 
 let computeHash (b: byte[]) = b |> HashAlgorithm.Create("SHA256").ComputeHash
-let toPositiveBigInteger bytes = BigInteger(Array.concat [ bytes ; [|0x0uy|]])
 
 let hash (content : String) = 
     let bytes = content |> System.Text.ASCIIEncoding.UTF8.GetBytes |> computeHash
-    (bytes |> toPositiveBigInteger), ( BitConverter.ToString( bytes ).Replace("-", "") )
-
+    BitConverter.ToString( bytes ).Replace("-", "")
 let blockHash (block: Block) = 
     [block.index |> string; block.minedBy; block.data; block.previousHash; block.nonce |> string]
     |> Seq.reduce (fun a b -> sprintf "%s %s" a b)
     |> hash
 
-let isValidHash hash (previousBlock: BlockWithHash) = hash % ( BigInteger (1000000L) ) = BigInteger.Zero
-
+let isValidHash (hash:String) = hash.StartsWith("0000")
 let newBlock minedBy data (previousBlock: BlockWithHash) = 
-    let nonce, _, hash = 
+    let nonce, hash = 
         Seq.initInfinite (fun i -> i |> int64)
         |> Seq.map(fun nonce -> 
             let block = {
@@ -41,9 +37,9 @@ let newBlock minedBy data (previousBlock: BlockWithHash) =
                 previousHash = previousBlock.hash
             }
 
-            let hashValue , hash =  block |> blockHash
-            nonce, hashValue, hash)
-        |> Seq.where (fun (_, hash, _) -> isValidHash hash previousBlock )
+            let hash =  block |> blockHash
+            nonce,hash)
+        |> Seq.where (fun (_, hash) -> isValidHash hash )
         |> Seq.head
             
     let block = {
@@ -61,7 +57,7 @@ let newBlock minedBy data (previousBlock: BlockWithHash) =
   
 let genesisBlock =
     let block = {
-        index = 1L;
+        index = 0L;
         minedBy = "Genesis"
         data = "Genesis";
         previousHash = "0";
@@ -70,13 +66,13 @@ let genesisBlock =
 
     { 
         block = block
-        hash = (blockHash block) |> snd
+        hash = block |> blockHash 
     }
 
 let tuple a = (a, a)
 
 let print x = x |> printfn "%A";x
-let numbeOfBlocksToGenerate = 500
+let numbeOfBlocksToGenerate = 5
 let blockchain2 =
     Seq.initInfinite id
     |> Seq.take numbeOfBlocksToGenerate
@@ -89,4 +85,3 @@ let blockchain2 =
 //#time "on"
 blockchain2
 |> Seq.iter (printfn "%A")
-

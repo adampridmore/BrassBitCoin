@@ -15,17 +15,17 @@ A block is defined as the following fields:
 The hash is made by concating all the above fields (exluding the hash) in the above order with a single space between each value (see below).
 
 The first block (the 'Genesis' block) is defined as:
-    index = 1
+    index = 0
     minedBy = "Genesis"
     data = "Genesis"
     previousHash = "0";
     nonce = 0
-    hash = "F6B82A75721103E570B9952F5A0A872C50665CB919751A7805635D0C6855BBCB"
+    hash = "F1A01423ACFBD25189F2FF6DC88075D703BAF23B7BA808F218FD7CC1615BFAFF"
 
 So the concatinated block values used to generate the hash are:
-"1 Genesis Genesis 0 0"
+"0 Genesis Genesis 0 0"
 Which generates the following SHA256 hash value (which is converted to text in upper case):
-F6B82A75721103E570B9952F5A0A872C50665CB919751A7805635D0C6855BBCB
+F1A01423ACFBD25189F2FF6DC88075D703BAF23B7BA808F218FD7CC1615BFAFF
 
 Subsiquent block must meet the following criteria:
 
@@ -34,7 +34,5 @@ minedBy is the name of the block minder (your name / id)
 data is any arbitary data to store in the block - (this would be any transactions in this block for bitcoin)
 previousHash is the hash of the previous block
 nonce (the nonsense number) a number which can be changed to make a valid hash (see below)
-hash of the block which is also a multiple of 1,000,000. 
-  e.g. hash % 1,000,000 = 0 
-  If it is not valid, try another nonce value!
+hash of the block starts with 5 zeros. If it is not valid, try another nonce value!
  
