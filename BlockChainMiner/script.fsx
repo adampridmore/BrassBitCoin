@@ -39,7 +39,7 @@ let newBlock minedBy data (previousBlock: BlockWithHash) =
 
             let hash =  block |> blockHash
             nonce,hash)
-        |> Seq.where (fun (_, hash) -> isValidHash hash )
+        |> Seq.where (fun (_, hash) -> isValidHash hash)
         |> Seq.head
             
     let block = {
@@ -54,34 +54,33 @@ let newBlock minedBy data (previousBlock: BlockWithHash) =
         block = block;
         hash = hash
     }
-  
+
 let genesisBlock =
     let block = {
         index = 0L;
         minedBy = "Genesis"
         data = "Genesis";
         previousHash = "0";
-        nonce = 0L;
+        nonce = 52458L;
     }
 
     { 
         block = block
-        hash = block |> blockHash 
+        hash = "000021C1766F55BD5D413F0AC128A5D3D6B50E4F0D608B653209C4D468232C11" // block |> blockHash 
     }
 
 let tuple a = (a, a)
 
-let print x = x |> printfn "%A";x
+//let print x = x |> printfn "%A";x
 let numbeOfBlocksToGenerate = 5
-let blockchain2 =
+let blockchain =
     Seq.initInfinite id
     |> Seq.take numbeOfBlocksToGenerate
     |> Seq.map string
-    |> Seq.toList
-    |> Seq.mapFold (fun previousBlock data -> previousBlock |> newBlock "Adam" data |> print |> tuple ) genesisBlock
+    //|> Seq.toList
+    |> Seq.mapFold (fun previousBlock data -> previousBlock |> newBlock "Adam" data |> tuple ) genesisBlock
     |> fst
-    |> Seq.toList
+    //|> Seq.toList
 
 //#time "on"
-blockchain2
-|> Seq.iter (printfn "%A")
+blockchain |> Seq.iter (printfn "%A")

@@ -37,30 +37,40 @@ import static org.junit.Assert.assertThat;
 */
 
 public class MyClassTests {
+
+    @Test
+    public void generateGenesis(){
+        Block pre = new Block();
+        pre.setIndex(-1);
+        pre.setHash("0");
+
+        Block genesis = generateNextBlock(pre, "Genesis", "Genesis");
+
+        System.out.println(genesis);
+    }
+
     @Test
     public void mine() {
-
         Block genesis = new Block();
         genesis.setIndex(0);
         genesis.setMinedBy("Genesis");
         genesis.setData("Genesis");
         genesis.setPreviousHash("0");
-        genesis.setNonce(0);
-        genesis.setHash("F1A01423ACFBD25189F2FF6DC88075D703BAF23B7BA808F218FD7CC1615BFAFF");
-
+        genesis.setNonce(52458);
+        genesis.setHash("000021C1766F55BD5D413F0AC128A5D3D6B50E4F0D608B653209C4D468232C11");
         //System.out.println(genesis.generateHash());
 
-        Block nextBlock = generateNextBlock(genesis);
+        Block nextBlock = generateNextBlock(genesis, "Adam", "0");
         System.out.println(nextBlock.toString());
 
     }
 
-    private Block generateNextBlock(Block previousBlock) {
+    private Block generateNextBlock(Block previousBlock, String minedBy, String data) {
         Block block = new Block();
         block.setPreviousHash(previousBlock.getHash());
         block.setIndex(previousBlock.getIndex() + 1);
-        block.setMinedBy("Adam");
-        block.setData("0");
+        block.setMinedBy(minedBy);
+        block.setData(data);
 
         block.setNonce(0);
         block.generateHash();
