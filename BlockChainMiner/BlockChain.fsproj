@@ -3,6 +3,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="block.fs" />
     <Compile Include="Library.fs" />
+    <Compile Include="miner.fs" />
   </ItemGroup>
 </Project>
