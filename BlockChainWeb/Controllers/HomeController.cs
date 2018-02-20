@@ -39,21 +39,31 @@ namespace BlockChainWeb.Controllers
         {
             _repository.DeleteAll();
 
-            var block = BlockChain.Miner.genesisBlock;
+            var genesisBlock = BlockChain.Miner.genesisBlock;
+            SaveBlock(genesisBlock);
 
+            BlockChain.Miner.blockchain(5, genesisBlock)
+                .AsQueryable()
+                .ToList()
+                .ForEach(SaveBlock);
+
+            return Redirect("~/Home/About");
+        }
+
+        private void SaveBlock(BlockChain.Miner.BlockWithHash genesisBlock)
+        {
             var blockDto = new Repository.Block()
             {
-                index = block.block.index,
-                data = block.block.data,
-                minedBy = block.block.minedBy,
-                nonce = block.block.nonce,
-                previousHash = block.block.previousHash,
-                hash = block.hash
+                createdTimeStampUtc = DateTime.UtcNow,
+                index = genesisBlock.block.index,
+                data = genesisBlock.block.data,
+                minedBy = genesisBlock.block.minedBy,
+                nonce = genesisBlock.block.nonce,
+                previousHash = genesisBlock.block.previousHash,
+                hash = genesisBlock.hash
             };
 
             _repository.Save(blockDto);
-                
-            return Redirect("~/Home/About");
         }
 
         public IActionResult Contact()

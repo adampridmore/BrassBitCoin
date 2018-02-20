@@ -10,6 +10,7 @@ namespace Repository
         [BsonId(IdGenerator = typeof(ObjectIdGenerator))]
         public ObjectId Id { get; set; }
 
+        public DateTime createdTimeStampUtc { get; set; }
         public Block()
         {
         }

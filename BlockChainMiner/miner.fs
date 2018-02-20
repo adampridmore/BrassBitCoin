@@ -16,7 +16,7 @@ type BlockWithHash = {
     hash: string
 }
 
-let computeHash (b: byte[]) = b |> HashAlgorithm.Create("SHA256").ComputeHash
+let computeHash (b: byte[]) = b |> SHA256.Create().ComputeHash
 
 let hash (content : String) = 
     let bytes = content |> System.Text.ASCIIEncoding.UTF8.GetBytes |> computeHash
