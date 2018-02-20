@@ -7,13 +7,18 @@ namespace Repository
 {
     public class Block
     {
-        [BsonId(IdGenerator=typeof(ObjectIdGenerator))]
+        [BsonId(IdGenerator = typeof(ObjectIdGenerator))]
         public ObjectId Id { get; set; }
 
         public Block()
         {
         }
 
-        public int Index { get; set; }
+        public long index { get; set; }
+        public string minedBy { get; set; }
+        public string data { get; set; }
+        public string previousHash { get; set; }
+        public long nonce { get; set; }
+        public string hash { get; set; }
     }
 }

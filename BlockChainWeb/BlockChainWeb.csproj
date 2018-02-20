@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BlockChainMiner\BlockChain.fsproj" />
     <ProjectReference Include="..\Repository\Repository.csproj" />
   </ItemGroup>
 

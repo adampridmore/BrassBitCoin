@@ -1,4 +1,4 @@
-module Miner
+module BlockChain.Miner
 
 open System
 open System.Security.Cryptography

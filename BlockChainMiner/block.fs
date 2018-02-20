@@ -1,4 +1,4 @@
-module Block
+module BlockChain.Types
 
 type Block = {
     index :int64
