@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 
 namespace Repository
 {
@@ -26,6 +27,13 @@ namespace Repository
         public IList<Block> GetAll()
         {
             return _collection.FindSync(FilterDefinition<Block>.Empty).ToList();
+        }
+
+        public Block GetLastBlock()
+        {
+            return _collection.AsQueryable()
+                .OrderByDescending(b => b.index)
+                .First();
         }
 
         public void DeleteAll()

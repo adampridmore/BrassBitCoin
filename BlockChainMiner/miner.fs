@@ -2,19 +2,7 @@ module BlockChain.Miner
 
 open System
 open System.Security.Cryptography
-
-type Block = {
-    index :int64
-    minedBy: string
-    data :  string
-    previousHash : string
-    nonce: int64
-}
-
-type BlockWithHash = {
-    block: Block;
-    hash: string
-}
+open BlockChain.Types
 
 let computeHash (b: byte[]) = b |> SHA256.Create().ComputeHash
 

@@ -46,5 +46,32 @@ namespace MyFirstUnitTests
             Assert.Equal(1, allBlocks.Count);
             Assert.Equal(10, allBlocks[0].index);
         }
+
+        [Fact]
+        public void GetLastBlock()
+        {
+            var block1 = new Block()
+            {
+                index = 1
+            };
+
+            var block2 = new Block()
+            {
+                index = 2
+            };
+
+            var block3 = new Block()
+            {
+                index = 3
+            };
+
+            repository.Save(block3);
+            repository.Save(block1);
+            repository.Save(block2);
+
+            var lastBlock = repository.GetLastBlock();
+
+            Assert.Equal(3, lastBlock.index);
+        }
     }
 }

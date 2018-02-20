@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BlockChainWeb.Models;
 using Microsoft.Extensions.Configuration;
+using Repository;
+using BlockChain;
 
 namespace BlockChainWeb.Controllers
 {
     public class HomeController : Controller
     {
         private IConfiguration _configuration;
-        private readonly Repository.BlockChainRepository _repository;
+        private readonly BlockChainRepository _repository;
 
         public HomeController(IConfiguration Configuration, Repository.BlockChainRepository repository)
         {
@@ -34,15 +36,16 @@ namespace BlockChainWeb.Controllers
 
             return View();
         }
+
         [HttpPost]
         public IActionResult ResetData()
         {
             _repository.DeleteAll();
 
-            var genesisBlock = BlockChain.Miner.genesisBlock;
+            var genesisBlock = Miner.genesisBlock;
             SaveBlock(genesisBlock);
 
-            BlockChain.Miner.blockchain(5, genesisBlock)
+            Miner.blockchain(5, genesisBlock)
                 .AsQueryable()
                 .ToList()
                 .ForEach(SaveBlock);
@@ -50,9 +53,30 @@ namespace BlockChainWeb.Controllers
             return Redirect("~/Home/About");
         }
 
-        private void SaveBlock(BlockChain.Miner.BlockWithHash genesisBlock)
+        [HttpPost]
+        public IActionResult MineBlock()
         {
-            var blockDto = new Repository.Block()
+            var lastBlockDto = _repository.GetLastBlock();
+
+            var lastBlock = DtoToBlock(lastBlockDto);
+
+            Miner.blockchain(1, lastBlock)
+                .AsQueryable()
+                .ToList()
+                .ForEach(SaveBlock);
+
+            return Redirect("~/Home/About");
+        }
+
+        private Types.BlockWithHash DtoToBlock(Block lastBlockDto)
+        {
+            var block = new Types.Block(lastBlockDto.index, lastBlockDto.minedBy, lastBlockDto.data, lastBlockDto.previousHash, lastBlockDto.nonce);
+            return new Types.BlockWithHash(block, lastBlockDto.hash);
+        }
+
+        private void SaveBlock(Types.BlockWithHash genesisBlock)
+        {
+            var blockDto = new Block()
             {
                 createdTimeStampUtc = DateTime.UtcNow,
                 index = genesisBlock.block.index,
