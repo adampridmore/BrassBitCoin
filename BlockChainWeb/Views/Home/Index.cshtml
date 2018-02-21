@@ -12,37 +12,19 @@
     <div class="col-md-4">
         <h2>View blockchain</h2>
         <ul>
-            <li>View the current <a asp-area="" asp-controller="Home" asp-action="Blockchain">blockchain</a></li>
+            <li>View the current <a asp-area="" asp-controller="Blocks" asp-action="">blockchain</a></li>
         </ul>
     </div>
     <div class="col-md-4">
         <h2>Coin owners</h2>
         <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398600">Add a Controller and View</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699315">Manage User Secrets using Secret Manager.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699316">Use logging to log a message.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699317">Add packages using NuGet.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699319">Target development, staging or production environment.</a></li>
+            <li>A list of <a asp-area="" asp-controller="Home" asp-action="CoinOwners">coin owners</a> and how many coins they have.</li>
         </ul>
     </div>
     <div class="col-md-4">
         <h2>Upload mined coin</h2>
         <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=518008">Conceptual overview of what is ASP.NET Core</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699320">Fundamentals of ASP.NET Core such as Startup and middleware.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398602">Working with Data</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398603">Security</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699321">Client side development</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699322">Develop on different platforms</a></li>
             <li><a href="https://go.microsoft.com/fwlink/?LinkID=699323">Read more on the documentation site</a></li>
         </ul>
     </div>
 </div>
-
-
-<ul>
-    @foreach (var block in Model)
-    {
-        <li>@block.ToString()</li>
-    }
-</ul>

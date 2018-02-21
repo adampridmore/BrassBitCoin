@@ -24,9 +24,7 @@ namespace BlockChainWeb.Controllers
 
         public IActionResult Index()
         {
-            var model = _repository.GetAll();
-
-            return View(model);
+            return View();
         }
 
         [HttpGet]
@@ -73,6 +71,10 @@ namespace BlockChainWeb.Controllers
             var blocks = _repository.GetAll();
 
             return View(blocks);
+        }
+        public IActionResult CoinOwners()
+        {
+            return View();
         }
 
         private Types.BlockWithHash DtoToBlock(Block lastBlockDto)
