@@ -73,5 +73,21 @@ namespace MyFirstUnitTests
 
             Assert.Equal(3, lastBlock.index);
         }
+
+        [Fact]
+        public void GetCoinOwners()
+        {
+            repository.Save(new Block() { index = 1, minedBy = "A" });
+            repository.Save(new Block() { index = 2, minedBy = "B" });
+            repository.Save(new Block() { index = 3, minedBy = "B" });
+
+            var coinOwners = repository.GetCoinOwners();
+
+            Assert.Equal(2, coinOwners.Count);
+            Assert.Equal("B", coinOwners[0].Name);
+            Assert.Equal(2, coinOwners[0].CoinCount);
+            Assert.Equal("A", coinOwners[1].Name);
+            Assert.Equal(1, coinOwners[1].CoinCount);
+        }
     }
 }

@@ -1,7 +1,28 @@
-﻿
+﻿@model IList<Repository.CoinOwner>
 @{
     ViewData["Title"] = "CoinOwners";
 }
 
 <h2>CoinOwners</h2>
 
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Coins</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var coinOwner in Model)
+        {
+        <tr>
+            <td>
+                @coinOwner.Name
+            </td>
+            <td>
+                @coinOwner.CoinCount
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

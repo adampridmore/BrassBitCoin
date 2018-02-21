@@ -66,15 +66,11 @@ namespace BlockChainWeb.Controllers
             return Redirect("~/Home/About");
         }
 
-        public IActionResult BlockChain()
-        {
-            var blocks = _repository.GetAll();
-
-            return View(blocks);
-        }
         public IActionResult CoinOwners()
         {
-            return View();
+            var coinOwners = _repository.GetCoinOwners();
+
+            return View(coinOwners);
         }
 
         private Types.BlockWithHash DtoToBlock(Block lastBlockDto)

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Linq;
 using System.Collections.Generic;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
@@ -39,6 +39,29 @@ namespace Repository
         public void DeleteAll()
         {
             _collection.DeleteMany(FilterDefinition<Block>.Empty);
+        }
+
+        public IList<CoinOwner> GetCoinOwners()
+        {
+            /*
+            db.blockChain.aggregate([{
+                $group:{
+                    _id: "$minedBy",
+                    count : { $sum : 1}
+                }
+            },{
+                $sort:{
+                    count: -1
+                }
+            }]) */
+
+            return _collection
+                .Aggregate()
+                .Group(key => key.minedBy,
+                    g => new CoinOwner{Name = g.Key ,  CoinCount = g.Sum(key => 1) }
+                )
+                .SortByDescending(co => co.CoinCount)
+                .ToList();
         }
     }
 }
