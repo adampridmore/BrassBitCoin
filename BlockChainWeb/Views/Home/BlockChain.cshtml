@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "BlockChain";
+}
+
+@model IList<Repository.Block>
+
+<h2>BlockChain</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>Mined by</td>
+            <td>Index</td>
+            <td>Created</td>
+            <td>Data</td>
+            <td>Hash</td>
+            <td>Nonce</td>
+            <td>Previous Hash</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var block in Model)
+        {
+        <tr>
+            <td>
+                @block.minedBy
+            </td>
+            <td>
+                @block.index
+            </td>
+            <td>
+                @block.createdTimeStampUtc
+            </td>
+            <td>
+                @block.data
+            </td>
+            <td>
+                @block.hash
+            </td>
+            <td>
+                @block.nonce
+            </td>
+            <td>
+                @block.previousHash
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+

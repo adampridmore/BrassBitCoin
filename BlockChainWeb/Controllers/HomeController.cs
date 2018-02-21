@@ -68,6 +68,13 @@ namespace BlockChainWeb.Controllers
             return Redirect("~/Home/About");
         }
 
+        public IActionResult BlockChain()
+        {
+            var blocks = _repository.GetAll();
+
+            return View(blocks);
+        }
+
         private Types.BlockWithHash DtoToBlock(Block lastBlockDto)
         {
             var block = new Types.Block(lastBlockDto.index, lastBlockDto.minedBy, lastBlockDto.data, lastBlockDto.previousHash, lastBlockDto.nonce);
