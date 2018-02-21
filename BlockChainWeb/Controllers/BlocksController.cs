@@ -15,11 +15,20 @@ namespace BlockChainWeb.Controllers
             this._repository = repository;
         }
 
-        public IActionResult Index()
+        public IActionResult BlockChain()
         {
             var blocks = _repository.GetAll();
 
             return View(blocks);
+        }
+
+        public IActionResult Upload()
+        {
+            return View();
+        }
+        public IActionResult Index()
+        {
+            return View(_repository.GetLastBlock());
         }
     }
 }

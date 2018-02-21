@@ -1,50 +1,49 @@
-﻿@{
-    ViewData["Title"] = "BlockChain";
+﻿@model Repository.Block
+@{
+    ViewData["Title"] = "Latest Block";
 }
 
-@model IList<Repository.Block>
+<h2>Latest</h2>
 
-<h2>BlockChain</h2>
+<p>View all the blocks in the <a asp-area="" asp-controller="Blocks" asp-action="BlockChain">Blockchain</a>.</p>
 
 <table class="table table-striped">
     <thead>
         <tr>
-            <td>Mined by</td>
-            <td>Index</td>
             <td>Created</td>
+            <td>Index</td>
+            <td>Mined by</td>
             <td>Data</td>
-            <td>Hash</td>
-            <td>Nonce</td>
             <td>Previous Hash</td>
+            <td>Nonce</td>
+            <td>Hash</td>
         </tr>
     </thead>
     <tbody>
-        @foreach (var block in Model)
-        {
+        @{var block = Model;}
         <tr>
             <td>
-                @block.minedBy
+                @block.createdTimeStampUtc
             </td>
             <td>
                 @block.index
             </td>
             <td>
-                @block.createdTimeStampUtc
+                @block.minedBy
             </td>
             <td>
                 @block.data
             </td>
             <td>
-                @block.hash
+                @block.previousHash
             </td>
             <td>
                 @block.nonce
             </td>
             <td>
-                @block.previousHash
+                @block.hash
             </td>
         </tr>
-        }
     </tbody>
 </table>
 
