@@ -8,6 +8,7 @@ using BlockChainWeb.Models;
 using Microsoft.Extensions.Configuration;
 using Repository;
 using BlockChain;
+using BlockChainWeb.Helpers;
 
 namespace BlockChainWeb.Controllers
 {
@@ -56,7 +57,7 @@ namespace BlockChainWeb.Controllers
         {
             var lastBlockDto = _repository.GetLastBlock();
 
-            var lastBlock = DtoToBlock(lastBlockDto);
+            var lastBlock = BlockHelpers.DtoToBlock(lastBlockDto);
 
             Miner.blockchain(1, lastBlock)
                 .AsQueryable()
@@ -72,26 +73,11 @@ namespace BlockChainWeb.Controllers
 
             return View(coinOwners);
         }
-
-        private Types.BlockWithHash DtoToBlock(Block lastBlockDto)
+                
+        private void SaveBlock(Types.BlockWithHash blockWithHash)
         {
-            var block = new Types.Block(lastBlockDto.index, lastBlockDto.minedBy, lastBlockDto.data, lastBlockDto.previousHash, lastBlockDto.nonce);
-            return new Types.BlockWithHash(block, lastBlockDto.hash);
-        }
-
-        private void SaveBlock(Types.BlockWithHash genesisBlock)
-        {
-            var blockDto = new Block()
-            {
-                createdTimeStampUtc = DateTime.UtcNow,
-                index = genesisBlock.block.index,
-                data = genesisBlock.block.data,
-                minedBy = genesisBlock.block.minedBy,
-                nonce = genesisBlock.block.nonce,
-                previousHash = genesisBlock.block.previousHash,
-                hash = genesisBlock.hash
-            };
-
+            var blockDto = BlockHelpers.BlockToDto(blockWithHash);
+            
             _repository.Save(blockDto);
         }
 

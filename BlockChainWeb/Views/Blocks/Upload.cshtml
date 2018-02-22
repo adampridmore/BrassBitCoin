@@ -5,3 +5,37 @@
 
 <h2>Upload</h2>
 
+@using (Html.BeginForm("Upload", "Blocks", FormMethod.Post))
+{
+    <div class="form-group">
+        <label>index</label>
+        <input class="form-control" type="text" name="index" id="index" />
+    </div>
+
+    <div class="form-group">
+        <label>minedBy:</label>
+        <input class="form-control" type="text" name="minedBy" id="minedBy" />
+    </div>
+
+    <div class="form-group">
+        <label>data:</label>
+        <input class="form-control" type="text" name="data" id="data" />
+    </div>
+
+    <div class="form-group">
+        <label>previousHash:</label>
+        <input class="form-control" type="text" name="previousHash" id="previousHash" />
+    </div>
+
+    <div class="form-group">
+        <label>nonce:</label>
+        <input class="form-control" type="text" name="nonce" id="nonce" />
+    </div>
+
+    <div class="form-group">
+        <label>hash:</label>
+        <input class="form-control" type="text" name="hash" id="hash" />
+    </div>
+
+    <input type="submit" class="btn btn-primary" />
+}

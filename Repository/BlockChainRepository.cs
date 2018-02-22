@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
+using System;
 
 namespace Repository
 {
@@ -20,6 +21,11 @@ namespace Repository
         public void Save(Block block)
         {
             var collection = _collection;
+
+            if (block.createdTimeStampUtc == null)
+            {
+                block.createdTimeStampUtc = DateTime.UtcNow;
+            }
 
             collection.InsertOne(block);
         }
