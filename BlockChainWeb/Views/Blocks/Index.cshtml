@@ -7,6 +7,12 @@
 
 <p>View all the blocks in the <a asp-area="" asp-controller="Blocks" asp-action="BlockChain">Blockchain</a>.</p>
 
+@if (Model == null)
+{
+    <h1>No blocks in chain</h1>
+}
+else
+{
 <table class="table table-striped">
     <thead>
         <tr>
@@ -46,4 +52,4 @@
         </tr>
     </tbody>
 </table>
-
+}

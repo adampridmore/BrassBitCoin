@@ -55,7 +55,11 @@ namespace BlockChainWeb.Controllers
         [HttpPost]
         public IActionResult MineBlock()
         {
-            var lastBlockDto = _repository.GetLastBlock();
+            var lastBlockDto = _repository.TryGetLastBlock();
+            if (lastBlockDto == null)
+            {
+                throw new ApplicationException("No blocks in chain");
+            }
 
             var lastBlock = BlockHelpers.DtoToBlock(lastBlockDto);
 

@@ -35,11 +35,11 @@ namespace Repository
             return _collection.FindSync(FilterDefinition<Block>.Empty).ToList();
         }
 
-        public Block GetLastBlock()
+        public Block TryGetLastBlock()
         {
             return _collection.AsQueryable()
                 .OrderByDescending(b => b.index)
-                .First();
+                .FirstOrDefault();
         }
 
         public void DeleteAll()
@@ -64,7 +64,7 @@ namespace Repository
             return _collection
                 .Aggregate()
                 .Group(key => key.minedBy,
-                    g => new CoinOwner{Name = g.Key ,  CoinCount = g.Sum(key => 1) }
+                    g => new CoinOwner { Name = g.Key, CoinCount = g.Sum(key => 1) }
                 )
                 .SortByDescending(co => co.CoinCount)
                 .ToList();

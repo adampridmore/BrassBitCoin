@@ -69,7 +69,7 @@ namespace MyFirstUnitTests
             repository.Save(block1);
             repository.Save(block2);
 
-            var lastBlock = repository.GetLastBlock();
+            var lastBlock = repository.TryGetLastBlock();
 
             Assert.Equal(3, lastBlock.index);
         }

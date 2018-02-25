@@ -37,7 +37,11 @@ namespace BlockChainWeb.Controllers
                                     string nonce,
                                     string hash)
         {
-            var lastBlock = _repository.GetLastBlock();
+            var lastBlock = _repository.TryGetLastBlock();
+            if (lastBlock == null)
+            {
+                throw new ApplicationException("No blocks in block chain");
+            }
             
             global::BlockChain.Types.Block block = new BlockChain.Types.Block(
                 long.Parse(index),
@@ -58,21 +62,9 @@ namespace BlockChainWeb.Controllers
             return Redirect("~/Blocks");
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
         public IActionResult Index()
         {
-            return View(_repository.GetLastBlock());
+            return View(_repository.TryGetLastBlock());
         }
     }
 }
