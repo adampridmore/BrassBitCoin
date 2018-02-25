@@ -29,7 +29,7 @@ else
         @{var block = Model;}
         <tr>
             <td>
-                @block.createdTimeStampUtc
+                @block.createdTimeStampUtc.Value.ToString("s")
             </td>
             <td>
                 @block.index
