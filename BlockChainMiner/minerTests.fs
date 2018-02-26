@@ -63,7 +63,8 @@ let ``is a valid block``()=
   | Invalid(errors) -> failwith (errors |> Seq.reduce (sprintf "%s %s"))
 
 let assertInvalidBlock expectedErrorMessage block = 
-  match (isValidBlock block genesisBlock) with
+  let isValid = isValidBlock block genesisBlock
+  match isValid with
   | Valid -> failwith("Should not be valid")
   | Invalid(errors) -> Assert.Equal(expectedErrorMessage, errors |> Seq.find(fun error->error = expectedErrorMessage))
   
@@ -71,14 +72,14 @@ let assertInvalidBlock expectedErrorMessage block =
 let ``is not a valid block - hash isn't hash of block``()=
   let notAValidBlock = {createNewBlock() with hash = "00001234"}
 
-  notAValidBlock |> assertInvalidBlock "block hash does not match"
+  notAValidBlock |> assertInvalidBlock "Hash does not match hash of block"
   
 [<Fact>]
 let ``is not a valid block - invalid hash``() =
   let validBlock = createNewBlock()
-  let notAValidBlock = {validBlock with block = {validBlock.block with nonce = 1L}}
+  let notAValidBlock = {validBlock with hash = "1234"}
   
-  notAValidBlock |> assertInvalidBlock "hash does not meet rules"
+  notAValidBlock |> assertInvalidBlock "Hash does not meet rules"
 
 [<Fact>]
 let ``is not a valid block - block parent hash is icorret``() =

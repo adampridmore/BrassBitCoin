@@ -21,12 +21,10 @@ type IsValidBlock =
   | Invalid of (string seq)
 
 let isValidBlock (block:BlockWithHash) (lastBlock:BlockWithHash) = 
-  let calculatedHash = block.block |> blockHash 
-
   let validation =
     seq{
-      yield calculatedHash = block.hash, "block hash does not match" 
-      yield (calculatedHash |> isValidHash), "hash does not meet rules"
+      yield block.block |> blockHash = block.hash, "Hash does not match hash of block" 
+      yield (block.hash |> isValidHash), "Hash does not meet rules"
       yield (lastBlock.hash = block.block.previousHash), "Previous hash does not match"
       yield (lastBlock.block.index + 1L) = (block.block.index), "Invalid index"
     }
