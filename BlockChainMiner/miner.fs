@@ -18,7 +18,7 @@ let isValidHash (hash:String) = hash.StartsWith("0000")
 
 let isValidBlock (block:BlockWithHash) (lastBlock:BlockWithHash) = 
   let calculatedHash = block.block |> blockHash 
-  
+
   let correctBlockHash = calculatedHash = block.hash 
   let blockHashValid = calculatedHash |> isValidHash
   let correctPreviousHash = lastBlock.hash = block.block.previousHash

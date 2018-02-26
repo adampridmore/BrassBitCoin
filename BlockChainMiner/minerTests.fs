@@ -3,6 +3,8 @@ open Xunit
 open BlockChain.Miner
 open BlockChain
 
+let createNewBlock() = genesisBlock |> Miner.newBlock "TestMinerName" "TestData"
+
 [<Fact>]
 let ``Genesis block``() =
   Assert.Equal(0L, genesisBlock.block.index)
@@ -18,12 +20,53 @@ let ``is valid hash``()=
 
 [<Fact>]
 let ``mine block``()=
-  let newBlock = genesisBlock |> Miner.newBlock "TestMinerName" "TestData"
+  let newBlock = createNewBlock()
+
   Assert.Equal("TestMinerName", newBlock.block.minedBy)
   Assert.Equal("TestData", newBlock.block.data)
   Assert.Equal(1L, newBlock.block.index)
   Assert.Equal(genesisBlock.hash, newBlock.block.previousHash)
   Assert.Equal(113095L, newBlock.block.nonce)
 
+[<Fact>]
+let ``hash test``()=
+  Assert.Equal("A7FD4C665FBF6375D99046EF9C525E8578FEB7A4794D119447282DB151C12CAE", ("Some Text" |> hash))
 
+[<Fact>]
+let ``block hash``()=
+  Assert.Equal(genesisBlock.hash, (genesisBlock.block |> blockHash))
 
+[<Fact>]
+let ``is a valid hash``=
+  Assert.True("0000123" |> isValidHash)
+
+[<Fact>]
+let ``is not a valid hash``=
+  Assert.True("1234" |> isValidHash)
+
+[<Fact>]
+let ``is a valid block``()=
+  genesisBlock |> isValidBlock
+
+[<Fact>]
+let ``is not a valid block - hash isn't hash of block``()=
+  let notAValidBlock = {createNewBlock() with hash = "00001234"}
+  Assert.False(isValidBlock notAValidBlock genesisBlock)
+
+[<Fact>]
+let ``is not a valid block - invalid hash``() =
+  let validBlock = createNewBlock()
+  let notAValidBlock = {validBlock with block = {validBlock.block with nonce = 1L}}
+  Assert.False(isValidBlock notAValidBlock genesisBlock)
+
+[<Fact>]
+let ``is not a valid block - block parent hash is icorret``() =
+  let validBlock = createNewBlock()
+  let notAValidBlock = {validBlock with block = {validBlock.block with previousHash= "00001234"}}
+  Assert.False(isValidBlock notAValidBlock genesisBlock)
+
+[<Fact>]
+let ``is not a valid block - incorrect index``() =
+  let validBlock = createNewBlock()
+  let notAValidBlock = {validBlock with block = {validBlock.block with index = 99L}}
+  Assert.False(isValidBlock notAValidBlock genesisBlock)
