@@ -28,6 +28,26 @@ let isValidBlock (block:BlockWithHash) (lastBlock:BlockWithHash) =
   |> Seq.exists(fun valid -> not valid)
   |> not
 
+type IsValidBlock = 
+  | Valid 
+  | Invalid of (string seq)
+
+let isValidBlock2 (block:BlockWithHash) (lastBlock:BlockWithHash) = 
+  let calculatedHash = block.block |> blockHash 
+
+  let validation =
+    seq{
+      yield calculatedHash = block.hash, "block hash does not match" 
+      yield (calculatedHash |> isValidHash), "hash does not meet rules"
+      yield (lastBlock.hash = block.block.previousHash), "Previous hash does not match"
+      yield (lastBlock.block.index + 1L) = (block.block.index), "Invalid index"
+    }
+    |> Seq.toList
+
+  match (validation |> List.exists(fun (valid, _) -> not valid)) |> not with
+  | true -> Valid
+  | false -> Invalid(validation |> Seq.map(snd))
+
 let newBlock minedBy data (previousBlock: BlockWithHash) = 
     let nonce, hash = 
         Seq.initInfinite (fun i -> i |> int64)
