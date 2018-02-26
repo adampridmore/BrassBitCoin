@@ -2,6 +2,8 @@
 using BlockChainWeb.Helpers;
 using BlockChain;
 using Microsoft.AspNetCore.Mvc;
+using BlockChainWeb.Models;
+using System.Linq;
 
 namespace BlockChainWeb.Controllers
 {
@@ -24,7 +26,7 @@ namespace BlockChainWeb.Controllers
         [HttpGet]
         public IActionResult Upload()
         {
-            return View();
+            return View("Upload", new UploadViewModel());
         }
 
         [HttpPost]
@@ -49,7 +51,20 @@ namespace BlockChainWeb.Controllers
                 long.Parse(nonce));
 
             var blockWithHash = new Types.BlockWithHash(block, hash);
-            AssertValidBlock(lastBlock, blockWithHash);
+            var isValidBlock = Miner.isValidBlock(blockWithHash, BlockHelpers.DtoToBlock(lastBlock));
+            if (isValidBlock.IsInvalid)
+            {
+                var invalid = isValidBlock as Miner.IsValidBlock.Invalid;
+                //throw new ApplicationException(
+                //    "Invalid block: " + String.Join(Environment.NewLine, invalid.Item));
+                var errors = invalid.Item.ToList();
+                var model = new UploadViewModel()
+                {
+                    Errors = errors
+                };
+
+                return View("Upload", model);
+            }
 
             _repository.Save(BlockHelpers.BlockToDto(blockWithHash));
 
@@ -58,13 +73,7 @@ namespace BlockChainWeb.Controllers
 
         private static void AssertValidBlock(Repository.Block lastBlock, Types.BlockWithHash blockWithHash)
         {
-            var isValidBlock = Miner.isValidBlock(blockWithHash, BlockHelpers.DtoToBlock(lastBlock));
-            if (isValidBlock.IsInvalid)
-            {
-                var invalid = isValidBlock as Miner.IsValidBlock.Invalid;
-                throw new ApplicationException(
-                    "Invalid block: " + String.Join(Environment.NewLine, invalid.Item));
-            }
+            
         }
 
         public IActionResult Index()
