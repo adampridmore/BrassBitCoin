@@ -59,26 +59,39 @@ let newBlock minedBy data (previousBlock: BlockWithHash) =
     }
 
 let genesisBlock =
-    let block = {
+  { 
+    block = 
+      {
         index = 0L;
         minedBy = "Genesis"
         data = "Genesis";
         previousHash = "0";
         nonce = 52458L;
-    }
+      }
+    hash = "000021C1766F55BD5D413F0AC128A5D3D6B50E4F0D608B653209C4D468232C11" // block |> blockHash 
+  }
 
-    { 
-        block = block
-        hash = "000021C1766F55BD5D413F0AC128A5D3D6B50E4F0D608B653209C4D468232C11" // block |> blockHash 
-    }
+let stringReduce seperator (strings: seq<string>) = 
+  strings 
+  |> Seq.reduce (fun a b -> sprintf "%s%s%s" a seperator b)
+
+let sprintBlock (block: BlockWithHash) = 
+  seq{
+    yield block.block.index |> string
+    yield block.block.minedBy
+    yield block.block.data
+    yield block.block.previousHash
+    yield block.block.nonce |> string
+    yield block.hash
+  } |> (stringReduce " ")
+
+//let numbeOfBlocksToGenerate = 5
 
 let tuple a = (a, a)
 
-//let print x = x |> printfn "%A";x
-let numbeOfBlocksToGenerate = 5
 let blockchain numbeOfBlocksToGenerate lastBlock =
-    Seq.initInfinite id
-    |> Seq.take numbeOfBlocksToGenerate
-    |> Seq.map string
-    |> Seq.mapFold (fun previousBlock data -> previousBlock |> newBlock "Adam" data |> tuple ) lastBlock
-    |> fst
+  Seq.initInfinite id
+  |> Seq.take numbeOfBlocksToGenerate
+  |> Seq.map string
+  |> Seq.mapFold (fun previousBlock data -> previousBlock |> newBlock "Adam" data |> tuple ) lastBlock
+  |> fst

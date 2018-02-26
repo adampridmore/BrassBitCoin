@@ -1,9 +1,21 @@
 ﻿module minerTests
 open Xunit
+open BlockChain.Types
 open BlockChain.Miner
 open BlockChain
 
-let createNewBlock() = genesisBlock |> Miner.newBlock "TestMinerName" "TestData"
+let createNewBlock() =     
+  { 
+    block = 
+      {
+        index = 1L;
+        minedBy = "TestMinerName"
+        data = "TestData";
+        previousHash = genesisBlock.hash;
+        nonce = 113095L;
+      }
+    hash = "0000C12840C025A31B0F68348382630BBD7DDD9FCDDC9431C8903DF76F22FDC5"
+  }
 
 [<Fact>]
 let ``Genesis block``() =
@@ -20,7 +32,7 @@ let ``is valid hash``()=
 
 [<Fact>]
 let ``mine block``()=
-  let newBlock = createNewBlock()
+  let newBlock = genesisBlock |> Miner.newBlock "TestMinerName" "TestData"
 
   Assert.Equal("TestMinerName", newBlock.block.minedBy)
   Assert.Equal("TestData", newBlock.block.data)
