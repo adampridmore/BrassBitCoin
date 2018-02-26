@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using BlockChainWeb.Helpers;
+using BlockChain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlockChainWeb.Controllers
@@ -42,24 +40,31 @@ namespace BlockChainWeb.Controllers
             {
                 throw new ApplicationException("No blocks in block chain");
             }
-            
-            global::BlockChain.Types.Block block = new BlockChain.Types.Block(
+
+            Types.Block block = new Types.Block(
                 long.Parse(index),
                 minedBy,
                 data,
                 previousHash,
                 long.Parse(nonce));
 
-            var blockWithHash = new global::BlockChain.Types.BlockWithHash(block, hash);
-
-            if (!global::BlockChain.Miner.isValidBlock(blockWithHash, BlockHelpers.DtoToBlock(lastBlock)))
-            {
-                throw new ApplicationException("Invalid block");
-            }
+            var blockWithHash = new Types.BlockWithHash(block, hash);
+            AssertValidBlock(lastBlock, blockWithHash);
 
             _repository.Save(BlockHelpers.BlockToDto(blockWithHash));
 
             return Redirect("~/Blocks");
+        }
+
+        private static void AssertValidBlock(Repository.Block lastBlock, Types.BlockWithHash blockWithHash)
+        {
+            var isValidBlock = Miner.isValidBlock(blockWithHash, BlockHelpers.DtoToBlock(lastBlock));
+            if (isValidBlock.IsInvalid)
+            {
+                var invalid = isValidBlock as Miner.IsValidBlock.Invalid;
+                throw new ApplicationException(
+                    "Invalid block: " + String.Join(Environment.NewLine, invalid.Item));
+            }
         }
 
         public IActionResult Index()

@@ -58,65 +58,36 @@ let ``is not a valid hash``=
 
 [<Fact>]
 let ``is a valid block``()=
-  Assert.True(isValidBlock (createNewBlock()) genesisBlock )
-
-[<Fact>]
-let ``is not a valid block - hash isn't hash of block``()=
-  let notAValidBlock = {createNewBlock() with hash = "00001234"}
-  Assert.False(isValidBlock notAValidBlock genesisBlock)
-
-[<Fact>]
-let ``is not a valid block - invalid hash``() =
-  let validBlock = createNewBlock()
-  let notAValidBlock = {validBlock with block = {validBlock.block with nonce = 1L}}
-  Assert.False(isValidBlock notAValidBlock genesisBlock)
-
-[<Fact>]
-let ``is not a valid block - block parent hash is icorret``() =
-  let validBlock = createNewBlock()
-  let notAValidBlock = {validBlock with block = {validBlock.block with previousHash= "00001234"}}
-  Assert.False(isValidBlock notAValidBlock genesisBlock)
-
-[<Fact>]
-let ``is not a valid block - incorrect index``() =
-  let validBlock = createNewBlock()
-  let notAValidBlock = {validBlock with block = {validBlock.block with index = 99L}}
-  Assert.False(isValidBlock notAValidBlock genesisBlock)
-
-
-
-[<Fact>]
-let ``is a valid block2``()=
-  match (isValidBlock2 (createNewBlock()) genesisBlock) with
+  match (isValidBlock (createNewBlock()) genesisBlock) with
   | Valid -> ()
   | Invalid(errors) -> failwith (errors |> Seq.reduce (sprintf "%s %s"))
 
 let assertInvalidBlock expectedErrorMessage block = 
-  match (isValidBlock2 block genesisBlock) with
+  match (isValidBlock block genesisBlock) with
   | Valid -> failwith("Should not be valid")
   | Invalid(errors) -> Assert.Equal(expectedErrorMessage, errors |> Seq.find(fun error->error = expectedErrorMessage))
   
 [<Fact>]
-let ``is not a valid block2 - hash isn't hash of block``()=
+let ``is not a valid block - hash isn't hash of block``()=
   let notAValidBlock = {createNewBlock() with hash = "00001234"}
 
   notAValidBlock |> assertInvalidBlock "block hash does not match"
   
 [<Fact>]
-let ``is not a valid block2 - invalid hash``() =
+let ``is not a valid block - invalid hash``() =
   let validBlock = createNewBlock()
   let notAValidBlock = {validBlock with block = {validBlock.block with nonce = 1L}}
   
   notAValidBlock |> assertInvalidBlock "hash does not meet rules"
 
 [<Fact>]
-let ``is not a valid block2 - block parent hash is icorret``() =
+let ``is not a valid block - block parent hash is icorret``() =
   let validBlock = createNewBlock()
   let notAValidBlock = {validBlock with block = {validBlock.block with previousHash= "00001234"}}
   notAValidBlock |> assertInvalidBlock "Previous hash does not match"
 
 [<Fact>]
-let ``is not a valid block2 - incorrect index``() =
+let ``is not a valid block - incorrect index``() =
   let validBlock = createNewBlock()
   let notAValidBlock = {validBlock with block = {validBlock.block with index = 99L}}
   notAValidBlock |> assertInvalidBlock "Invalid index"

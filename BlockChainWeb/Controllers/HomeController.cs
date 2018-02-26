@@ -53,7 +53,7 @@ namespace BlockChainWeb.Controllers
         }
 
         [HttpPost]
-        public IActionResult MineBlock()
+        public IActionResult MineAndSaveBlock()
         {
             var lastBlockDto = _repository.TryGetLastBlock();
             if (lastBlockDto == null)

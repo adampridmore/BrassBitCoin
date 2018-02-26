@@ -16,23 +16,11 @@ let blockHash (block: Block) =
 
 let isValidHash (hash:String) = hash.StartsWith("0000")
 
-let isValidBlock (block:BlockWithHash) (lastBlock:BlockWithHash) = 
-  let calculatedHash = block.block |> blockHash 
-
-  seq{
-    yield calculatedHash = block.hash 
-    yield calculatedHash |> isValidHash
-    yield lastBlock.hash = block.block.previousHash
-    yield (lastBlock.block.index + 1L) = (block.block.index)
-  }
-  |> Seq.exists(fun valid -> not valid)
-  |> not
-
 type IsValidBlock = 
   | Valid 
   | Invalid of (string seq)
 
-let isValidBlock2 (block:BlockWithHash) (lastBlock:BlockWithHash) = 
+let isValidBlock (block:BlockWithHash) (lastBlock:BlockWithHash) = 
   let calculatedHash = block.block |> blockHash 
 
   let validation =
@@ -42,9 +30,10 @@ let isValidBlock2 (block:BlockWithHash) (lastBlock:BlockWithHash) =
       yield (lastBlock.hash = block.block.previousHash), "Previous hash does not match"
       yield (lastBlock.block.index + 1L) = (block.block.index), "Invalid index"
     }
+    |> Seq.where(fun (valid , _) -> not valid)
     |> Seq.toList
-
-  match (validation |> List.exists(fun (valid, _) -> not valid)) |> not with
+    
+  match (validation |> List.isEmpty ) with
   | true -> Valid
   | false -> Invalid(validation |> Seq.map(snd))
 
