@@ -6,7 +6,12 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "BlockChain", "BlockChainMin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{3740F138-89EA-4706-889F-3AC2413397A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlockChainWeb", "BlockChainWeb\BlockChainWeb.csproj", "{2F6E74D9-6AE2-457A-8F5A-8532781897F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlockChainWeb", "BlockChainWeb\BlockChainWeb.csproj", "{2F6E74D9-6AE2-457A-8F5A-8532781897F7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BE7A2678-B4A8-4FA1-B50D-65C736B3ADAB}"
+	ProjectSection(SolutionItems) = preProject
+		block_chain_spec.txt = block_chain_spec.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
