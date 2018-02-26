@@ -19,14 +19,14 @@ let isValidHash (hash:String) = hash.StartsWith("0000")
 let isValidBlock (block:BlockWithHash) (lastBlock:BlockWithHash) = 
   let calculatedHash = block.block |> blockHash 
 
-  let correctBlockHash = calculatedHash = block.hash 
-  let blockHashValid = calculatedHash |> isValidHash
-  let correctPreviousHash = lastBlock.hash = block.block.previousHash
-  let correctIndex = (lastBlock.block.index + 1L) = (block.block.index)
-
-  match correctBlockHash, blockHashValid, correctPreviousHash, correctIndex with
-  | true, true, true, true -> true
-  | _ -> false
+  seq{
+    yield calculatedHash = block.hash 
+    yield calculatedHash |> isValidHash
+    yield lastBlock.hash = block.block.previousHash
+    yield (lastBlock.block.index + 1L) = (block.block.index)
+  }
+  |> Seq.exists(fun valid -> not valid)
+  |> not
 
 let newBlock minedBy data (previousBlock: BlockWithHash) = 
     let nonce, hash = 
