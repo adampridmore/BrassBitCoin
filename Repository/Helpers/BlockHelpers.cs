@@ -1,7 +1,6 @@
-﻿using BlockChain;
-using static BlockChain.Types;
+﻿using static BlockChain.Types;
 
-namespace BlockChainWeb.Helpers
+namespace BlockChain.Helpers
 {
     public class BlockHelpers
     {

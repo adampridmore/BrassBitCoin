@@ -14,5 +14,9 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlockChainMiner\BlockChain.fsproj" />
+  </ItemGroup>
 </Project>
 

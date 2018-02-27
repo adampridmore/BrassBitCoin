@@ -21,7 +21,7 @@ let previousBlockWithHash = {
   hash = "0000DEA9218EB34470BAD8C08D8BC1FD73D304739FD55E8652F17A3D3CD3876F"
 }
 
-previousBlockWithHash |> blockchain 1 |> Seq.iter (printfn "%A")
+previousBlockWithHash |> blockchain 1 "Adam" |> Seq.iter (printfn "%A")
 
 
 

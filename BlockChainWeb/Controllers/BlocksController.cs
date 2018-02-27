@@ -1,12 +1,11 @@
 ﻿using System;
-using BlockChainWeb.Helpers;
+using BlockChain.Helpers;
 using BlockChain;
 using Microsoft.AspNetCore.Mvc;
 using BlockChainWeb.Models;
 using System.Linq;
 using System.Net;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace BlockChainWeb.Controllers
 {

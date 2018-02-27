@@ -96,9 +96,9 @@ let sprintBlock (block: BlockWithHash) =
 
 let tuple a = (a, a)
 
-let blockchain numbeOfBlocksToGenerate lastBlock =
+let blockchain numbeOfBlocksToGenerate minedBy lastBlock =
   Seq.initInfinite id
   |> Seq.take numbeOfBlocksToGenerate
   |> Seq.map string
-  |> Seq.mapFold (fun previousBlock data -> previousBlock |> newBlock "Adam" data |> tuple ) lastBlock
+  |> Seq.mapFold (fun previousBlock data -> previousBlock |> newBlock minedBy data |> tuple ) lastBlock
   |> fst

@@ -9,6 +9,7 @@
     <Compile Include="minerTests.fs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="mine_next_block.fsx" />
     <None Include="script.fsx" />
   </ItemGroup>
   <ItemGroup>

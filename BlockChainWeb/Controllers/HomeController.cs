@@ -8,7 +8,7 @@ using BlockChainWeb.Models;
 using Microsoft.Extensions.Configuration;
 using Repository;
 using BlockChain;
-using BlockChainWeb.Helpers;
+using BlockChain.Helpers;
 
 namespace BlockChainWeb.Controllers
 {
@@ -44,7 +44,7 @@ namespace BlockChainWeb.Controllers
             var genesisBlock = Miner.genesisBlock;
             SaveBlock(genesisBlock);
 
-            Miner.blockchain(5, genesisBlock)
+            Miner.blockchain(5, "Adam", genesisBlock)
                 .AsQueryable()
                 .ToList()
                 .ForEach(SaveBlock);
@@ -63,7 +63,7 @@ namespace BlockChainWeb.Controllers
 
             var lastBlock = BlockHelpers.DtoToBlock(lastBlockDto);
 
-            Miner.blockchain(1, lastBlock)
+            Miner.blockchain(1, "Adam", lastBlock)
                 .AsQueryable()
                 .ToList()
                 .ForEach(SaveBlock);
