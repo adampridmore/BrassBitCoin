@@ -95,3 +95,8 @@ let ``is not a valid block - incorrect index``() =
 
 
 
+//[<Fact>]
+//let ``Block with transcations``() =
+//  let previousBlock = createNewBlock()
+  
+//  previousBlock |> Miner.newBlock "Adam" "Transaction:'Adam'->'Dave':1" |> sprintf "%A"
