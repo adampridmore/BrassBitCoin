@@ -26,7 +26,7 @@ let isValidBlock (block:BlockWithHash) (lastBlock:BlockWithHash) =
       yield block.block |> blockHash = block.hash, "Hash does not match hash of block." 
       yield (block.hash |> isValidHash), "Hash does not meet rules."
       yield (lastBlock.hash = block.block.previousHash), "Previous hash does not match."
-      yield (lastBlock.block.index + 1L) = (block.block.index), "Invalid index."
+      yield (lastBlock.block.index + 1) = (block.block.index), "Invalid index."
     }
     |> Seq.where(fun (valid , _) -> not valid)
     |> Seq.toList
@@ -37,10 +37,10 @@ let isValidBlock (block:BlockWithHash) (lastBlock:BlockWithHash) =
 
 let newBlock minedBy data (previousBlock: BlockWithHash) = 
     let nonce, hash = 
-        Seq.initInfinite (fun i -> i |> int64)
+        Seq.initInfinite id
         |> Seq.map(fun nonce -> 
             let block = {
-                index = (previousBlock.block.index + 1L)
+                index = (previousBlock.block.index + 1)
                 minedBy = minedBy
                 data = data
                 nonce = nonce
@@ -53,7 +53,7 @@ let newBlock minedBy data (previousBlock: BlockWithHash) =
         |> Seq.head
             
     let block = {
-        index = previousBlock.block.index + 1L;
+        index = previousBlock.block.index + 1;
         minedBy = minedBy;
         data = data;
         nonce = nonce;
@@ -69,11 +69,11 @@ let genesisBlock =
   { 
     block = 
       {
-        index = 0L;
+        index = 0;
         minedBy = "Genesis"
         data = "Genesis";
         previousHash = "0";
-        nonce = 52458L;
+        nonce = 52458;
       }
     hash = "000021C1766F55BD5D413F0AC128A5D3D6B50E4F0D608B653209C4D468232C11" // block |> blockHash 
   }

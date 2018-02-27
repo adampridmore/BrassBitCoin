@@ -8,21 +8,21 @@ let createNewBlock() =
   { 
     block = 
       {
-        index = 1L;
+        index = 1;
         minedBy = "TestMinerName"
         data = "TestData";
         previousHash = genesisBlock.hash;
-        nonce = 113095L;
+        nonce = 113095;
       }
     hash = "0000C12840C025A31B0F68348382630BBD7DDD9FCDDC9431C8903DF76F22FDC5"
   }
 
 [<Fact>]
 let ``Genesis block``() =
-  Assert.Equal(0L, genesisBlock.block.index)
+  Assert.Equal(0, genesisBlock.block.index)
   Assert.Equal("Genesis", genesisBlock.block.data)
   Assert.Equal("Genesis", genesisBlock.block.minedBy)
-  Assert.Equal(52458L, genesisBlock.block.nonce)
+  Assert.Equal(52458, genesisBlock.block.nonce)
   Assert.Equal("0", genesisBlock.block.previousHash)
   Assert.Equal("000021C1766F55BD5D413F0AC128A5D3D6B50E4F0D608B653209C4D468232C11", genesisBlock.hash)
    
@@ -36,9 +36,9 @@ let ``mine block``()=
 
   Assert.Equal("TestMinerName", newBlock.block.minedBy)
   Assert.Equal("TestData", newBlock.block.data)
-  Assert.Equal(1L, newBlock.block.index)
+  Assert.Equal(1, newBlock.block.index)
   Assert.Equal(genesisBlock.hash, newBlock.block.previousHash)
-  Assert.Equal(113095L, newBlock.block.nonce)
+  Assert.Equal(113095, newBlock.block.nonce)
 
 [<Fact>]
 let ``hash test``()=
@@ -90,7 +90,7 @@ let ``is not a valid block - block parent hash is icorret``() =
 [<Fact>]
 let ``is not a valid block - incorrect index``() =
   let validBlock = createNewBlock()
-  let notAValidBlock = {validBlock with block = {validBlock.block with index = 99L}}
+  let notAValidBlock = {validBlock with block = {validBlock.block with index = 99}}
   notAValidBlock |> assertInvalidBlock "Invalid index."
 
 

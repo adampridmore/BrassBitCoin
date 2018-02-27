@@ -1,11 +1,11 @@
 module BlockChain.Types
 
 type Block = {
-    index :int64
+    index :int
     minedBy: string
     data :  string
     previousHash : string
-    nonce: int64
+    nonce: int
 }
 
 type BlockWithHash = {

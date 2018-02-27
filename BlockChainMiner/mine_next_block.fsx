@@ -24,11 +24,11 @@ open BlockChain
 {
     block = 
         {
-            index= 9L
+            index= 9
             minedBy="Adam"
             data= "0"
             previousHash= "00002D93E57961F3D269E12ABFBAAA21A22B9A34C907AEFC94C6CF362DC07562"
-            nonce = 60607L
+            nonce = 60607
         }
     hash= "000066FFAD8BC368DACDF4A17EFED490BC36B60A4B7A2E522DCE0A3179F6DC5D"
 }
