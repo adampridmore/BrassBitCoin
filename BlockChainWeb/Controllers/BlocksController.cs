@@ -4,6 +4,9 @@ using BlockChain;
 using Microsoft.AspNetCore.Mvc;
 using BlockChainWeb.Models;
 using System.Linq;
+using System.Net;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace BlockChainWeb.Controllers
 {
@@ -29,12 +32,11 @@ namespace BlockChainWeb.Controllers
             return View("Upload", new UploadViewModel());
         }
 
-        [HttpPost]
-        public IActionResult Upload(string index,
+        private Tuple<bool, IList<string>> TryUploadBlock(int index,
                                     string minedBy,
                                     string data,
                                     string previousHash,
-                                    string nonce,
+                                    int nonce,
                                     string hash)
         {
             var lastBlock = _repository.TryGetLastBlock();
@@ -44,36 +46,112 @@ namespace BlockChainWeb.Controllers
             }
 
             Types.Block block = new Types.Block(
-                long.Parse(index),
+                index,
                 minedBy,
                 data,
                 previousHash,
-                long.Parse(nonce));
+                nonce);
 
             var blockWithHash = new Types.BlockWithHash(block, hash);
             var isValidBlock = Miner.isValidBlock(blockWithHash, BlockHelpers.DtoToBlock(lastBlock));
             if (isValidBlock.IsInvalid)
             {
                 var invalid = isValidBlock as Miner.IsValidBlock.Invalid;
-                //throw new ApplicationException(
-                //    "Invalid block: " + String.Join(Environment.NewLine, invalid.Item));
                 var errors = invalid.Item.ToList();
-                var model = new UploadViewModel()
-                {
-                    Errors = errors
-                };
 
-                return View("Upload", model);
+                return Tuple.Create<bool, IList<string>>(false, errors);
             }
 
             _repository.Save(BlockHelpers.BlockToDto(blockWithHash));
 
-            return Redirect("~/Blocks");
+            return Tuple.Create<bool, IList<string>>(true, new List<string>());
+        }
+
+        [HttpPost]
+        public ActionResult Upload([FromBody] PostUploadBlock block)
+        {
+            var validationErrors = ValidateBlock(block);
+            if (validationErrors.Any())
+            {
+                return StatusCode((int)HttpStatusCode.BadRequest,
+                    new
+                    {
+                        ok = "false",
+                        errorMessage = String.Join(Environment.NewLine, validationErrors)
+                    });
+            }
+
+
+            try
+            {
+                var result = TryUploadBlock(
+                    int.Parse(block.index),
+                    block.minedBy,
+                    block.data,
+                    block.previousHash,
+                    int.Parse(block.nonce),
+                    block.hash);
+
+                if (result.Item1)
+                {
+                    return StatusCode((int)HttpStatusCode.Created,
+                        new
+                        {
+                            ok = true,
+                        });
+                }
+                else
+                {
+                    return StatusCode((int)HttpStatusCode.BadRequest,
+                    new
+                    {
+                        ok = "false",
+                        errorMessage = string.Join(Environment.NewLine, result.Item2)
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.BadRequest,
+                    new
+                    {
+                        ok = "false",
+                        errorMessage = ex.Message
+                    });
+            }
+        }
+
+        private IEnumerable<string> ValidateBlock(PostUploadBlock block)
+        {
+            if (string.IsNullOrWhiteSpace(block.index) || !int.TryParse(block.index, out _))
+            {
+                yield return "Invalid index must be present and be a number.";
+            }
+            if (string.IsNullOrWhiteSpace(block.hash))
+            {
+                yield return "Invalid hash.";
+            }
+            if (string.IsNullOrWhiteSpace(block.data))
+            {
+                yield return "Invalid data.";
+            }
+            if (string.IsNullOrWhiteSpace(block.minedBy))
+            {
+                yield return "Invalid minedBy.";
+            }
+            if (String.IsNullOrWhiteSpace(block.nonce) || !int.TryParse(block.nonce, out _))
+            {
+                yield return "Invalid nonce must be present and be a number.";
+            }
+            if (string.IsNullOrWhiteSpace(block.previousHash))
+            {
+                yield return "Invalid previousHash.";
+            }
         }
 
         private static void AssertValidBlock(Repository.Block lastBlock, Types.BlockWithHash blockWithHash)
         {
-            
+
         }
 
         public IActionResult Index()

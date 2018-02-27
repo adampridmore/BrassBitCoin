@@ -5,23 +5,7 @@
 
 <h2>Upload</h2>
 
-@if (Model.Errors != null)
-{
-    <div class="alert alert-danger">
-        <strong>Invalid block</strong>
-        <ul>
-            @foreach (var error in Model.Errors)
-            {
-                <li>
-                    @error
-                </li>
-            }
-        </ul>
-    </div>
-}
-
-@using (Html.BeginForm("Upload", "Blocks", FormMethod.Post))
-{
+<div>
     <div class="form-group">
         <label>index</label>
         <input class="form-control" type="text" name="index" id="index" />
@@ -52,5 +36,55 @@
         <input class="form-control" type="text" name="hash" id="hash" />
     </div>
 
-    <input type="submit" class="btn btn-primary" />
+    <button id="bSubmit" class="btn btn-primary">Submit</button>
+
+    <div id="dAlert" class="alert alert-danger" hidden="hidden">
+        <strong>Invalid block</strong>
+        <p id="errorMessage"></p>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts{
+    <script type="text/javascript">
+       var url = "@Url.Content("~/Blocks/Upload")";
+
+        $(document).ready(function () {
+            $('#bSubmit').click(function () {
+                var block = {
+                    index: $('#index').val(),
+                    minedBy: $('#minedBy').val(),
+                    data: $('#data').val(),
+                    previousHash: $('#previousHash').val(),
+                    nonce: $('#nonce').val(),
+                    hash: $('#hash').val()
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    contentType: 'application/json',
+                    data: JSON.stringify(block),
+                    success: function () {
+                        console.log("sucess");
+                        $('#dAlert').hide();
+                    },
+                    error: function (data) {
+                        console.log("error");
+
+                        $('#errorMessage').html(data.responseJSON.errorMessage);
+                        $('#dAlert').show();                        
+                    }
+                });
+
+                console.log("hello");// $.ajax.
+            });
+        });
+    </script>
 }
+
+
+

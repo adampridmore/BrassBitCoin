@@ -72,26 +72,26 @@ let assertInvalidBlock expectedErrorMessage block =
 let ``is not a valid block - hash isn't hash of block``()=
   let notAValidBlock = {createNewBlock() with hash = "00001234"}
 
-  notAValidBlock |> assertInvalidBlock "Hash does not match hash of block"
+  notAValidBlock |> assertInvalidBlock "Hash does not match hash of block."
   
 [<Fact>]
 let ``is not a valid block - invalid hash``() =
   let validBlock = createNewBlock()
   let notAValidBlock = {validBlock with hash = "1234"}
   
-  notAValidBlock |> assertInvalidBlock "Hash does not meet rules"
+  notAValidBlock |> assertInvalidBlock "Hash does not meet rules."
 
 [<Fact>]
 let ``is not a valid block - block parent hash is icorret``() =
   let validBlock = createNewBlock()
   let notAValidBlock = {validBlock with block = {validBlock.block with previousHash= "00001234"}}
-  notAValidBlock |> assertInvalidBlock "Previous hash does not match"
+  notAValidBlock |> assertInvalidBlock "Previous hash does not match."
 
 [<Fact>]
 let ``is not a valid block - incorrect index``() =
   let validBlock = createNewBlock()
   let notAValidBlock = {validBlock with block = {validBlock.block with index = 99L}}
-  notAValidBlock |> assertInvalidBlock "Invalid index"
+  notAValidBlock |> assertInvalidBlock "Invalid index."
 
 
 
