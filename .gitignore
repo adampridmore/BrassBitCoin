@@ -286,3 +286,4 @@ bin
 # End of https://www.gitignore.io/api/fsharp,aspnetcore
 /BlockChainMinerJava/target
 /notes.txt
+/Code/BlockChainMinerJava/target
