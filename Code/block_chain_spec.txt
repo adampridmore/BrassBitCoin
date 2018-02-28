@@ -10,7 +10,7 @@ A block is defined as the following fields:
     nonce: int
     hash : string
 
-The hash is made by concatenating all the above fields (excluding the hash) in the above order with a single space between each value (see below).
+The hash value is the SHA-256 hash of all the fields concatenated (excluding the hash) with a single space between as an upper case hex string (see example below).
 
 The first block (the 'Genesis' block) is defined as:
     index = 0
