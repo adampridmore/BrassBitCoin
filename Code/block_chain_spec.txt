@@ -40,8 +40,8 @@ Transactions
 
 The data in a block may be an optional transaction. If it starts with "Transaction" it is considered a transactions with the following format:
 
-Transaction:'<from miner name>'->'<to miner name>':<integer amount>
+Transaction,<from miner name>,<to miner name>,<integer amount>
 
 e.g.
 
-Transaction:'Adam'->'Dave':1
+Transaction,Adam,Dave,1

@@ -3,13 +3,17 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="block.fs" />
+    <Compile Include="types.fs" />
     <Compile Include="Library.fs" />
     <Compile Include="miner.fs" />
     <Compile Include="minerTests.fs" />
+    <Compile Include="transactions.fs" />
+    <Compile Include="transactionTests.fs" />
+
   </ItemGroup>
   <ItemGroup>
     <None Include="mine_next_block.fsx" />
+    <None Include="script_transactions.fsx" />
     <None Include="script.fsx" />
   </ItemGroup>
   <ItemGroup>

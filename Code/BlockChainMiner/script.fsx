@@ -1,4 +1,4 @@
-#load "block.fs"
+#load "Types.fs"
 #load "miner.fs"
 
 open BlockChain.Types
