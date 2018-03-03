@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Repository
+﻿namespace Repository
 {
-    public class CoinOwner
+    public class MinerDto
     {
         public string Name { get; internal set; }
         

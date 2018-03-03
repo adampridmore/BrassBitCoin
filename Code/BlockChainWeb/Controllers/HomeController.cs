@@ -70,7 +70,7 @@ namespace BlockChainWeb.Controllers
 
         public IActionResult CoinOwners()
         {
-            var coinOwners = _repository.GetCoinOwners();
+            var coinOwners = _repository.GetMinerDtos();
 
             return View(coinOwners);
         }

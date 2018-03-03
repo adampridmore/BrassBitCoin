@@ -47,7 +47,7 @@ namespace Repository
             _collection.DeleteMany(FilterDefinition<BlockDto>.Empty);
         }
 
-        public IList<CoinOwner> GetCoinOwners()
+        public IList<MinerDto> GetMinerDtos()
         {
             /*
             db.blockChain.aggregate([{
@@ -64,7 +64,7 @@ namespace Repository
             return _collection
                 .Aggregate()
                 .Group(key => key.minedBy,
-                    g => new CoinOwner { Name = g.Key, CoinsMined = g.Sum(key => 1) }
+                    g => new MinerDto { Name = g.Key, CoinsMined = g.Sum(key => 1) }
                 )
                 .SortByDescending(co => co.CoinsMined)
                 .ToList();
