@@ -42,3 +42,35 @@ let ``apply other transaction``()=
     let miner = {name= "Adam"; balance=300};
     let transaction = { from = "Dave"; ``to``= "Fred"; ammount = 100 }
     Assert.Equal(300, (transaction |> applyTransaction miner).balance)
+
+[<Fact>]
+let ``apply transactions to miners``()=
+    let miners = [  { name = "Adam";balance = 100};
+                    { name = "Dave";balance = 200}  ]
+    let transaction = { from ="Adam"; ``to`` = "Dave"; ammount = 30 }
+
+    let newMiners = applyTransactionToMiners miners transaction |> Seq.toList
+    
+    Assert.Equal(2, newMiners.Length)
+    Assert.Equal("Adam", newMiners.[0].name)
+    Assert.Equal(70, newMiners.[0].balance)
+    Assert.Equal("Dave", newMiners.[1].name)
+    Assert.Equal(230, newMiners.[1].balance)
+
+[<Fact>]
+let ``apply transactions to miners when missing miner``()=
+    let miners = [  ]
+    let transaction = { from ="Adam"; ``to`` = "Dave"; ammount = 30 }
+
+    let newMiners = applyTransactionToMiners miners transaction |> Seq.toList
+    
+    Assert.Equal(2, newMiners.Length)
+    Assert.Equal("Adam", newMiners.[0].name)
+    Assert.Equal(-30, newMiners.[0].balance)
+    Assert.Equal("Dave", newMiners.[1].name)
+    Assert.Equal(30, newMiners.[1].balance)
+
+
+
+
+    

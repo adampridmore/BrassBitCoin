@@ -1,29 +1,40 @@
-#load "Types.fs"
+#load "types.fs"
+#load "minerHelpers.fs"
 #load "miner.fs"
+#load "transactions.fs"
 
 open BlockChain.Types
 open BlockChain.Miner
+open BlockChain.Transaction
 
-let numbeOfBlocksToGenerate = 5
+let miners = 
+  [
+    {
+      name = "Adam";
+      balance = 100
+    };
+    {
+      name = "Dave";
+      balance = 200
+    }
+  ]
 
-//#time "on"
+let transaction = 
+  {
+    from ="Betty";
+    ``to`` = "Bob";
+    ammount = 10
+  }
 
-// genesisBlock |> blockchain numbeOfBlocksToGenerate |> Seq.iter (printfn "%A")
+let addMissingMiner name (miners: seq<Miner>)=
+    match miners |> Seq.exists(fun m -> m.name = name) with
+    | false-> Seq.concat [miners; Seq.singleton {name = name; balance = 0}]
+    | true -> miners
 
-let previousBlockWithHash = {
-  block = {
-    Block.index = 9;
-    minedBy = "Adam";
-    data = "0";
-    previousHash = "0000D6CBE5B197E5F0ED88F773A6BD03F1A5D6E39A7C75E297DC1D12685BE5C8";
-    nonce = 6334;
-  };
-  hash = "0000DEA9218EB34470BAD8C08D8BC1FD73D304739FD55E8652F17A3D3CD3876F"
-}
+let applyTransactionToMiners (miners: seq<Miner>) (transaction: Transaction) =
+    miners
+    |> addMissingMiner (transaction.``from``)
+    |> addMissingMiner (transaction.``to`` )
+    |> Seq.map(fun miner -> transaction |> applyTransaction miner)
 
-previousBlockWithHash |> blockchain 1 "Adam" |> Seq.iter (printfn "%A")
-
-
-
-genesisBlock |> sprintBlock
-
+applyTransactionToMiners miners transaction

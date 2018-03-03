@@ -1,9 +1,9 @@
 #load "types.fs"
+#load "minerHelpers.fs"
 #load "miner.fs"
 
 //#reference @"..\Repository\bin\Debug\netcoreapp2.0\Repository.dll"
 //#reference @"..\Repository\bin\Debug\netcoreapp2.0\BlockChain.dll"
-
 
 open BlockChain.Types
 open BlockChain.Miner
@@ -12,14 +12,12 @@ open BlockChain
 //open BlockChain
 //open Repository
 
-
 //let repository = Repository.BlockChainRepository("mongodb://...");
 //let lastBlock = repository.TryGetLastBlock();
 
 //BlockChain.Helpers.BlockHelpers.DtoToBlock(lastBlock )
 //|> Miner.blockchain 1 
 //|> Seq.exactlyOne
-
 
 {
     block = 
