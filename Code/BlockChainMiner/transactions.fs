@@ -13,7 +13,7 @@ let private partsToTransaction a b c =
     | true, ammount -> Some({from = a; ``to``= b; ammount = ammount})
 
 
-let parseTransaction (txt:string) = 
+let parseSingleTransaction (txt:string) = 
     let parts = txt.Split([|','|], System.StringSplitOptions.RemoveEmptyEntries)
 
     match parts.Length, parts.[0] with

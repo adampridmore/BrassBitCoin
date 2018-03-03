@@ -12,11 +12,17 @@
                 <b>H</b>ash
             </td>
             <td>Nonce</td>
+            <td></td>
         </tr>
     </thead>
     <tbody>
+        @{ 
+            var index = 0;
+        }
         @foreach (var block in Model)
         {
+            var blockTextId = $"blockText_index";
+                index++;
             <tr>
                 <td>
                     @block.createdTimeStampUtc.Value.ToString("s")
@@ -36,6 +42,12 @@
                 </td>
                 <td>
                     @block.nonce
+                </td>
+                <td>
+                    @{
+                        var blockText = BlockChain.MinerHelpers.sprintBlock(BlockChain.BlockHelpers.DtoToBlock(block));
+                    }
+                    <input type="text" name="country" value="@blockText" readonly data-tip="index minedBy data previousHash nonce hash">
                 </td>
             </tr>
         }

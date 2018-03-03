@@ -1,6 +1,7 @@
 ﻿module BlockChain.BlockHelpers
 open BlockChain.Types
 open Repository.Dto
+open System
 
 let DtoToBlock (lastBlockDto:BlockDto ) =
     {

@@ -13,7 +13,7 @@ let ``transaction to string``() =
 
 [<Fact>]
 let ``parse transaction``() =
-    let t = parseTransaction "Transaction,Adam,Dave,100"
+    let t = parseSingleTransaction "Transaction,Adam,Dave,100"
     Assert.True(t.IsSome)
     Assert.Equal("Adam", t.Value.from)
     Assert.Equal("Dave", t.Value.``to``)

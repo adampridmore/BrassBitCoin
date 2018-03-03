@@ -4,6 +4,7 @@ open Xunit
 open BlockChain.Types
 open BlockChain
 open Repository.Dto
+open System
 
 [<Fact>]
 let ``To block dto``() =
@@ -41,3 +42,5 @@ let ``Dto to block``() =
     Assert.Equal(123, blockWithHash.block.nonce)
     Assert.Equal("myPreviousHash", blockWithHash.block.previousHash)
     Assert.Equal("myHash", blockWithHash.hash)
+
+
