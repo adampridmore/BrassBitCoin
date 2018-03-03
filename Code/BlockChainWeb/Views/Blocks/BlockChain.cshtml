@@ -12,9 +12,9 @@
             <td>Index</td>
             <td>Mined by</td>
             <td>Data</td>
-            <td>Previous Hash</td>
+            <td><b>P</b>revious Hash<br/>
+            <b>H</b>ash</td>
             <td>Nonce</td>
-            <td>Hash</td>
         </tr>
     </thead>
     <tbody>
@@ -34,13 +34,11 @@
                     @block.data
                 </td>
                 <td>
-                    @block.previousHash
+                    <b>P:</b> @block.previousHash<br/>
+                    <b>H:</b> @block.hash
                 </td>
                 <td>
                     @block.nonce
-                </td>
-                <td>
-                    @block.hash
                 </td>
             </tr>
         }
