@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BlockChainWeb.Models;
 using Microsoft.Extensions.Configuration;
 using Repository;
 using BlockChain;
-using BlockChain.Helpers;
 
 namespace BlockChainWeb.Controllers
 {

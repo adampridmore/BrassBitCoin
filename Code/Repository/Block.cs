@@ -15,11 +15,26 @@ namespace Repository
         {
         }
 
-        public int index { get; set; }
-        public string minedBy { get; set; }
-        public string data { get; set; }
-        public string previousHash { get; set; }
-        public int nonce { get; set; }
-        public string hash { get; set; }
-    }
+        public Block(int index,
+            string data,
+            string minedBy,
+            int nonce,
+            string previousHash,
+            string hash)
+        {
+            this.index = index;
+            this.data = data;
+            this.minedBy = minedBy;
+            this.nonce = nonce;
+            this.previousHash = previousHash;
+            this.hash = hash;
+        }
+    
+    public int index { get; set; }
+    public string minedBy { get; set; }
+    public string data { get; set; }
+    public string previousHash { get; set; }
+    public int nonce { get; set; }
+    public string hash { get; set; }
+}
 }

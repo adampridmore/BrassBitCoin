@@ -1,4 +1,4 @@
-#load "block.fs"
+#load "types.fs"
 #load "miner.fs"
 
 //#reference @"..\Repository\bin\Debug\netcoreapp2.0\Repository.dll"
