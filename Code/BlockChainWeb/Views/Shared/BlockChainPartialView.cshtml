@@ -1,0 +1,43 @@
+﻿@model IList<Repository.Dto.BlockDto>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>Created</td>
+            <td>Index</td>
+            <td>Mined by</td>
+            <td>Data</td>
+            <td>
+                <b>P</b>revious Hash<br />
+                <b>H</b>ash
+            </td>
+            <td>Nonce</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var block in Model)
+        {
+            <tr>
+                <td>
+                    @block.createdTimeStampUtc.Value.ToString("s")
+                </td>
+                <td>
+                    @block.index
+                </td>
+                <td>
+                    @block.minedBy
+                </td>
+                <td>
+                    @block.data
+                </td>
+                <td>
+                    <b>P:</b> @block.previousHash<br />
+                    <b>H:</b> @block.hash
+                </td>
+                <td>
+                    @block.nonce
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

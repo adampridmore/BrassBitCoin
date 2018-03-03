@@ -1,4 +1,7 @@
-﻿@model Repository.Dto.BlockDto
+﻿@using System.Collections.Generic
+@using Repository.Dto
+
+@model BlockDto
 @{
     ViewData["Title"] = "Latest Block";
 }
@@ -13,43 +16,5 @@
 }
 else
 {
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <td>Created</td>
-            <td>Index</td>
-            <td>Mined by</td>
-            <td>Data</td>
-            <td>Previous Hash</td>
-            <td>Nonce</td>
-            <td>Hash</td>
-        </tr>
-    </thead>
-    <tbody>
-        @{var block = Model;}
-        <tr>
-            <td>
-                @block.createdTimeStampUtc.Value.ToString("s")
-            </td>
-            <td>
-                @block.index
-            </td>
-            <td>
-                @block.minedBy
-            </td>
-            <td>
-                @block.data
-            </td>
-            <td>
-                @block.previousHash
-            </td>
-            <td>
-                @block.nonce
-            </td>
-            <td>
-                @block.hash
-            </td>
-        </tr>
-    </tbody>
-</table>
+    @Html.Partial("BlockChainPartialView", new List<BlockDto> { Model });
 }
