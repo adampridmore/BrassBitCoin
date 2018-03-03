@@ -24,3 +24,17 @@ let BlockToDto(blockWithHash:BlockWithHash) =
         blockWithHash.block.previousHash,
         blockWithHash.hash);
 
+let minerDtoToMiner (minerDto:Repository.Dto.MinerDto) = 
+    {
+        name = minerDto.Name;
+        coinsMined = minerDto.CoinsMined;
+        balance = minerDto.CoinsMined
+    }
+
+let transactionDtoToTransaction (dto: TransactionDto) =
+    {
+        from = dto.from;
+        ``to`` = dto.``to``;
+        ammount = dto.ammount            
+    }
+

@@ -2,6 +2,7 @@
 open Xunit
 open BlockChain.Types
 open BlockChain.Transaction
+open Repository.Dto
 
 [<Fact>]
 let ``transaction to string``() =
@@ -70,7 +71,24 @@ let ``apply transactions to miners when missing miner``()=
     Assert.Equal("Dave", newMiners.[1].name)
     Assert.Equal(30, newMiners.[1].balance)
 
+[<Fact>]
+let ``Get balancers from repository``()=
+    let repository =   Repository.UnitTests.BlockDtoRepositoryTests.CreateRepositoryForTestDb()
+    repository.DeleteAll()
+    
+    repository.Save(new BlockDto(1, "Adam", "Transaction,Adam,Dave,1", 0, "", ""));
 
+    let miners = 
+        getAllMiners(repository) 
+        |> Seq.sortBy (fun m -> m.name)
+        |> Seq.toList
 
+    Assert.Equal(2, miners.Length)
+    Assert.Equal("Adam", miners.[0].name)
+    Assert.Equal(1, miners.[0].coinsMined)
+    Assert.Equal(0, miners.[0].balance)
+    Assert.Equal("Dave", miners.[1].name)
+    Assert.Equal(0, miners.[1].coinsMined)
+    Assert.Equal(1, miners.[1].balance)
 
     

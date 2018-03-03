@@ -6,6 +6,7 @@ open BlockChain
 open BlockChain.DtoHelpers
 open Repository.Dto
 open System
+open System.Reflection
 
 [<Fact>]
 let ``To block dto``() =
@@ -47,17 +48,22 @@ let ``Dto to block``() =
 
 [<Fact>]
 let ``Dto to Miner``()=
-    let minerDto = new Repository.Dto.MinerDto("myName",10)
-
-    let miner = {
-        name = minerDto.Name;
-        coinsMined = minerDto.CoinsMined;
-        balance = minerDto.CoinsMined
-    }
+    let miner = 
+        new Repository.Dto.MinerDto("myName",10) 
+        |> minerDtoToMiner
 
     Assert.Equal("myName", miner.name); 
     Assert.Equal(10, miner.coinsMined); 
     Assert.Equal(10, miner.balance); 
 
+[<Fact>]
+let ``Dto to transaction``()= 
+    let transaction = 
+        new TransactionDto("myFrom", "myTo", 123)
+        |> transactionDtoToTransaction
+
+    Assert.Equal("myFrom", transaction.from)
+    Assert.Equal("myTo", transaction.``to``)
+    Assert.Equal(123, transaction.ammount)
 
     

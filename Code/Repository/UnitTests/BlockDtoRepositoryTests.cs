@@ -3,15 +3,20 @@ using Repository.Dto;
 using System.Collections.Generic;
 using Xunit;
 
-namespace MyFirstUnitTests
+namespace Repository.UnitTests
 {
     public class BlockDtoRepositoryTests
     {
-        private readonly string _url = "mongodb://localhost/BlockChainTest";
+        public static BlockDtoRepository CreateRepositoryForTestDb()
+        {
+            string _url = "mongodb://localhost/BlockChainTest";
+            return new BlockDtoRepository(_url);
+        }
+                
         private BlockDtoRepository repository;
         public BlockDtoRepositoryTests()
         {
-            repository = new BlockDtoRepository(_url);
+            repository = CreateRepositoryForTestDb();
             repository.DeleteAll();
         }
 
