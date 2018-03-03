@@ -6,19 +6,19 @@ using System;
 
 namespace Repository
 {
-    public class BlockChainRepository
+    public class BlockDtoRepository
     {
-        private readonly IMongoCollection<Block> _collection;
+        private readonly IMongoCollection<BlockDto> _collection;
 
-        public BlockChainRepository(string mongoUrl)
+        public BlockDtoRepository(string mongoUrl)
         {
             var url = new MongoDB.Driver.MongoUrl(mongoUrl);
             var client = new MongoDB.Driver.MongoClient(url);
             var database = client.GetDatabase(url.DatabaseName);
-            _collection = database.GetCollection<Block>("blockChain");
+            _collection = database.GetCollection<BlockDto>("blockChain");
         }
 
-        public void Save(Block block)
+        public void Save(BlockDto block)
         {
             var collection = _collection;
 
@@ -30,12 +30,12 @@ namespace Repository
             collection.InsertOne(block);
         }
 
-        public IList<Block> GetAll()
+        public IList<BlockDto> GetAll()
         {
-            return _collection.FindSync(FilterDefinition<Block>.Empty).ToList();
+            return _collection.FindSync(FilterDefinition<BlockDto>.Empty).ToList();
         }
 
-        public Block TryGetLastBlock()
+        public BlockDto TryGetLastBlock()
         {
             return _collection.AsQueryable()
                 .OrderByDescending(b => b.index)
@@ -44,7 +44,7 @@ namespace Repository
 
         public void DeleteAll()
         {
-            _collection.DeleteMany(FilterDefinition<Block>.Empty);
+            _collection.DeleteMany(FilterDefinition<BlockDto>.Empty);
         }
 
         public IList<CoinOwner> GetCoinOwners()

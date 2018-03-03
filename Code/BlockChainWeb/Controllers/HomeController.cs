@@ -12,9 +12,9 @@ namespace BlockChainWeb.Controllers
     public class HomeController : Controller
     {
         private IConfiguration _configuration;
-        private readonly BlockChainRepository _repository;
+        private readonly BlockDtoRepository _repository;
 
-        public HomeController(IConfiguration Configuration, Repository.BlockChainRepository repository)
+        public HomeController(IConfiguration Configuration, Repository.BlockDtoRepository repository)
         {
             _configuration = Configuration;
             this._repository = repository;

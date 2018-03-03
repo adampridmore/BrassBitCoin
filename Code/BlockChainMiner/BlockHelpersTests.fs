@@ -30,7 +30,7 @@ let ``To block dto``() =
 
 [<Fact>]
 let ``Dto to block``() =
-    let blockDto = new Repository.Block(1,"myMinedBy", "myData", 123,"myPreviousHash",  "myHash");
+    let blockDto = new Repository.BlockDto(1,"myMinedBy", "myData", 123,"myPreviousHash",  "myHash");
 
     let blockWithHash = blockDto |> BlockHelpers.DtoToBlock
 

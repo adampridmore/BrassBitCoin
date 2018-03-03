@@ -23,10 +23,10 @@ namespace BlockChainWeb
         {
             services.AddMvc();
 
-            services.AddTransient<Repository.BlockChainRepository>(delegate(IServiceProvider sp) {
+            services.AddTransient<Repository.BlockDtoRepository>(delegate(IServiceProvider sp) {
                 var mongoUrlText = Configuration["ConnectionStrings:MongoDB"];
 
-                return new Repository.BlockChainRepository(mongoUrlText);
+                return new Repository.BlockDtoRepository(mongoUrlText);
             });
         }
 

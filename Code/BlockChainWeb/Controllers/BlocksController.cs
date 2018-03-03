@@ -10,9 +10,9 @@ namespace BlockChainWeb.Controllers
 {
     public class BlocksController : Controller
     {
-        private readonly Repository.BlockChainRepository _repository;
+        private readonly Repository.BlockDtoRepository _repository;
 
-        public BlocksController(Repository.BlockChainRepository repository)
+        public BlocksController(Repository.BlockDtoRepository repository)
         {
             this._repository = repository;
         }
@@ -147,7 +147,7 @@ namespace BlockChainWeb.Controllers
             }
         }
 
-        private static void AssertValidBlock(Repository.Block lastBlock, Types.BlockWithHash blockWithHash)
+        private static void AssertValidBlock(Repository.BlockDto lastBlock, Types.BlockWithHash blockWithHash)
         {
 
         }

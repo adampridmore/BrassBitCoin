@@ -2,7 +2,7 @@
 open BlockChain.Types
 open Repository
 
-let DtoToBlock (lastBlockDto:Repository.Block ) =
+let DtoToBlock (lastBlockDto:Repository.BlockDto ) =
     {
         block = {
                 index = lastBlockDto.index;
@@ -15,7 +15,7 @@ let DtoToBlock (lastBlockDto:Repository.Block ) =
     }
 
 let BlockToDto(blockWithHash:BlockWithHash) =
-    new Repository.Block(
+    new Repository.BlockDto(
         blockWithHash.block.index,
         blockWithHash.block.minedBy,
         blockWithHash.block.data,

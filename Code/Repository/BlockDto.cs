@@ -5,17 +5,18 @@ using MongoDB.Bson.Serialization.IdGenerators;
 
 namespace Repository
 {
-    public class Block
+
+    public class BlockDto
     {
         [BsonId(IdGenerator = typeof(ObjectIdGenerator))]
         public ObjectId Id { get; set; }
 
         public DateTime? createdTimeStampUtc { get; set; }
-        public Block()
+        public BlockDto()
         {
         }
 
-        public Block(int index,
+        public BlockDto(int index,
             string minedBy,
             string data,
             int nonce,
