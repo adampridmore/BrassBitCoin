@@ -16,15 +16,15 @@ namespace Repository
         }
 
         public Block(int index,
-            string data,
             string minedBy,
+            string data,
             int nonce,
             string previousHash,
             string hash)
         {
             this.index = index;
-            this.data = data;
             this.minedBy = minedBy;
+            this.data = data;
             this.nonce = nonce;
             this.previousHash = previousHash;
             this.hash = hash;

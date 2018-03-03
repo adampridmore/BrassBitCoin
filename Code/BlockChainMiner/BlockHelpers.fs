@@ -17,8 +17,8 @@ let DtoToBlock (lastBlockDto:Repository.Block ) =
 let BlockToDto(blockWithHash:BlockWithHash) =
     new Repository.Block(
         blockWithHash.block.index,
-        blockWithHash.block.data,
         blockWithHash.block.minedBy,
+        blockWithHash.block.data,
         blockWithHash.block.nonce,
         blockWithHash.block.previousHash,
         blockWithHash.hash);
