@@ -6,15 +6,16 @@ open BlockChain.Types
 
 let computeHash (b: byte[]) = b |> SHA256.Create().ComputeHash
 
-let hash (content : String) = 
+let internal hashString (content : String) = 
     let bytes = content |> System.Text.ASCIIEncoding.UTF8.GetBytes |> computeHash
     BitConverter.ToString( bytes ).Replace("-", "")
-let blockHash (block: Block) = 
+
+let internal blockHash (block: Block) = 
     [block.index |> string; block.minedBy; block.data; block.previousHash; block.nonce |> string]
     |> Seq.reduce (fun a b -> sprintf "%s %s" a b)
-    |> hash
+    |> hashString
 
-let isValidHash (hash:String) = hash.StartsWith("0000")
+let internal isValidHash (hash:String) = hash.StartsWith("0000")
 
 type IsValidBlock = 
   | Valid 

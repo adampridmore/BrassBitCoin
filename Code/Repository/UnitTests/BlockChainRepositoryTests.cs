@@ -85,9 +85,9 @@ namespace MyFirstUnitTests
 
             Assert.Equal(2, coinOwners.Count);
             Assert.Equal("B", coinOwners[0].Name);
-            Assert.Equal(2, coinOwners[0].CoinCount);
+            Assert.Equal(2, coinOwners[0].CoinsMined);
             Assert.Equal("A", coinOwners[1].Name);
-            Assert.Equal(1, coinOwners[1].CoinCount);
+            Assert.Equal(1, coinOwners[1].CoinsMined);
         }
     }
 }

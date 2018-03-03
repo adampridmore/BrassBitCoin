@@ -42,7 +42,7 @@ let ``mine block``()=
 
 [<Fact>]
 let ``hash test``()=
-  Assert.Equal("A7FD4C665FBF6375D99046EF9C525E8578FEB7A4794D119447282DB151C12CAE", ("Some Text" |> hash))
+  Assert.Equal("A7FD4C665FBF6375D99046EF9C525E8578FEB7A4794D119447282DB151C12CAE", ("Some Text" |> hashString))
 
 [<Fact>]
 let ``block hash``()=

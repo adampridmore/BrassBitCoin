@@ -64,9 +64,9 @@ namespace Repository
             return _collection
                 .Aggregate()
                 .Group(key => key.minedBy,
-                    g => new CoinOwner { Name = g.Key, CoinCount = g.Sum(key => 1) }
+                    g => new CoinOwner { Name = g.Key, CoinsMined = g.Sum(key => 1) }
                 )
-                .SortByDescending(co => co.CoinCount)
+                .SortByDescending(co => co.CoinsMined)
                 .ToList();
         }
     }
