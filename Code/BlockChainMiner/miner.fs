@@ -48,8 +48,9 @@ let newBlock minedBy data (previousBlock: BlockWithHash) =
                 previousHash = previousBlock.hash
             }
 
+
             let hash =  block |> blockHash
-            nonce,hash)
+            nonce,hash) // TODO - Should we create a blockWithHash here?
         |> Seq.where (fun (_, hash) -> isValidHash hash)
         |> Seq.head
             

@@ -1,4 +1,5 @@
 using Repository;
+using System.Collections.Generic;
 using Xunit;
 
 namespace MyFirstUnitTests
@@ -81,6 +82,62 @@ namespace MyFirstUnitTests
             Assert.Equal(2, minerDtos[0].CoinsMined);
             Assert.Equal("A", minerDtos[1].Name);
             Assert.Equal(1, minerDtos[1].CoinsMined);
+        }
+
+        [Fact]
+        public void GetTransactions()
+        {
+            var transactionLines = new List<string>{
+                "Transaction, Adam,Dave, 1",
+                "Transaction, Adam,Dave, 2"
+            };
+
+            var transactionText = string.Join(System.Environment.NewLine, transactionLines);
+
+            repository.Save(new BlockDto {
+                index = 1,
+                data = transactionText,
+                minedBy = "Adam" }
+            );
+
+            var transactions = repository.GetTransactions();
+
+            Assert.Equal(2, transactions.Count);
+        }
+
+        [Fact]
+        public void TryParseInvalidLine()
+        {
+            var transaction = BlockDtoRepository.TryParseLine("InvalidTransaction");
+            Assert.Null(transaction);
+        }
+
+
+
+        [Fact]
+        public void TryParseLine()
+        {
+            var transaction = BlockDtoRepository.TryParseLine("Transaction,Adam,Dave,123");
+            Assert.NotNull(transaction);
+
+            Assert.Equal("Adam", transaction.from);
+            Assert.Equal("Dave", transaction.to);
+            Assert.Equal(123, transaction.ammount);
+        }
+
+        [Fact]
+        public void TryParseInvalidLine_wrong_number_of_fields()
+        {
+            var transaction = BlockDtoRepository.TryParseLine("Transaction,Adam,Dave,123,");
+            Assert.Null(transaction);
+        }
+
+
+        [Fact]
+        public void TryParseInvalidLine_invalid_ammount()
+        {
+            var transaction = BlockDtoRepository.TryParseLine("Transaction,Adam,Dave,1.2");
+            Assert.Null(transaction);
         }
     }
 }

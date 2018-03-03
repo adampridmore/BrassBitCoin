@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using System;
+using Repository.Dto;
 
 namespace Repository
 {
@@ -68,6 +69,47 @@ namespace Repository
                 )
                 .SortByDescending(co => co.CoinsMined)
                 .ToList();
+        }
+
+        public IList<TransactionDto> GetTransactions()
+        {
+            var blocks = GetAll();
+            return BlockToTansactionDtos(blocks).ToList();
+
+        }
+
+        private IEnumerable<TransactionDto> BlockToTansactionDtos(IList<BlockDto> blocks)
+        {
+            return blocks
+                .SelectMany(b => BlockToTansactionDtos(b.data));
+        }
+
+        private IEnumerable<TransactionDto> BlockToTansactionDtos(string data)
+        {
+            return data
+                .Split(Environment.NewLine)
+                .Select(line => TryParseLine(line))
+                .Where(transaction => transaction != null);
+        }
+        internal static TransactionDto TryParseLine(string line)
+        {
+            if (!line.StartsWith("Transaction"))
+            {
+                return null;
+            }
+
+            var lines = line.Split(",");
+            if (lines.Length != 4)
+            {
+                return null;
+            }
+
+            if (!int.TryParse(lines[3], out int ammount))
+            {
+                return null;
+            }
+
+            return new TransactionDto(lines[1], lines[2], ammount);
         }
     }
 }
