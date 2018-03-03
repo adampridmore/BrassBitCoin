@@ -70,9 +70,11 @@ namespace BlockChainWeb.Controllers
 
         public IActionResult CoinOwners()
         {
-            var coinOwners = _repository.GetMinerDtos();
+            var miners = Transaction.getAllMiners(_repository).ToList();
 
-            return View(coinOwners);
+            //var coinOwners = _repository.GetMinerDtos();
+
+            return View(miners);
         }
                 
         private void SaveBlock(Types.BlockWithHash blockWithHash)

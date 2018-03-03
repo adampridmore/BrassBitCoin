@@ -1,4 +1,4 @@
-﻿@model IList<Repository.Dto.MinerDto>
+﻿@model IList<BlockChain.Types.Miner>
 @{
     ViewData["Title"] = "Coin Owners";
 }
@@ -10,6 +10,7 @@
         <tr>
             <td>Name</td>
             <td>Coins Mined</td>
+            <td>Balance</td>
         </tr>
     </thead>
     <tbody>
@@ -17,10 +18,13 @@
         {
         <tr>
             <td>
-                @coinOwner.Name
+                @coinOwner.name
             </td>
             <td>
-                @coinOwner.CoinsMined
+                @coinOwner.coinsMined
+            </td>
+            <td>
+                @coinOwner.balance
             </td>
         </tr>
         }
