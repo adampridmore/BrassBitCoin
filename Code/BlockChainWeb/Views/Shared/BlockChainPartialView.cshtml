@@ -45,7 +45,7 @@
                 </td>
                 <td>
                     @{
-                        var blockText = BlockChain.MinerHelpers.sprintBlock(BlockChain.BlockHelpers.DtoToBlock(block));
+                        var blockText = BlockChain.MinerHelpers.sprintBlock(BlockChain.DtoHelpers.DtoToBlock(block));
                     }
                     <input type="text" name="country" value="@blockText" readonly data-tip="index minedBy data previousHash nonce hash">
                 </td>

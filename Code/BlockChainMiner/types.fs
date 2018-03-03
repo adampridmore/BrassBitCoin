@@ -26,4 +26,5 @@ type Transaction = {
 type Miner = {
     name: string;
     balance: int;
+    coinsMined: int
 }

@@ -58,7 +58,7 @@ namespace BlockChainWeb.Controllers
                 throw new ApplicationException("No blocks in chain");
             }
 
-            var lastBlock = BlockHelpers.DtoToBlock(lastBlockDto);
+            var lastBlock = DtoHelpers.DtoToBlock(lastBlockDto);
 
             Miner.blockchain(1, "Adam", lastBlock)
                 .AsQueryable()
@@ -77,7 +77,7 @@ namespace BlockChainWeb.Controllers
                 
         private void SaveBlock(Types.BlockWithHash blockWithHash)
         {
-            var blockDto = BlockHelpers.BlockToDto(blockWithHash);
+            var blockDto = DtoHelpers.BlockToDto(blockWithHash);
             
             _repository.Save(blockDto);
         }

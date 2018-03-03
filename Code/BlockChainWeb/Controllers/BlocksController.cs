@@ -52,7 +52,7 @@ namespace BlockChainWeb.Controllers
                 nonce);
 
             var blockWithHash = new Types.BlockWithHash(block, hash);
-            var isValidBlock = Miner.isValidBlock(blockWithHash, BlockHelpers.DtoToBlock(lastBlock));
+            var isValidBlock = Miner.isValidBlock(blockWithHash, DtoHelpers.DtoToBlock(lastBlock));
             if (isValidBlock.IsInvalid)
             {
                 var invalid = isValidBlock as Types.IsValidBlock.Invalid;
@@ -61,7 +61,7 @@ namespace BlockChainWeb.Controllers
                 return Tuple.Create<bool, IList<string>>(false, errors);
             }
 
-            _repository.Save(BlockHelpers.BlockToDto(blockWithHash));
+            _repository.Save(DtoHelpers.BlockToDto(blockWithHash));
 
             return Tuple.Create<bool, IList<string>>(true, new List<string>());
         }

@@ -5,8 +5,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="types.fs" />
-    <Compile Include="BlockHelpers.fs" />
-    <Compile Include="BlockHelpersTests.fs" />
+    <Compile Include="DtoHelpers.fs" />
+    <Compile Include="DtoHelpersTests.fs" />
     <Compile Include="Library.fs" />
     <Compile Include="minerHelpers.fs" />
     <Compile Include="miner.fs" />

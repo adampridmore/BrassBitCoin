@@ -1,8 +1,9 @@
-﻿module BlockHelpersTests
+﻿module BlockChain.DtoHelpersTests
 
 open Xunit
 open BlockChain.Types
 open BlockChain
+open BlockChain.DtoHelpers
 open Repository.Dto
 open System
 
@@ -21,7 +22,7 @@ let ``To block dto``() =
         hash = "000021C1766F55BD5D413F0AC128A5D3D6B50E4F0D608B653209C4D468232C11" // block |> blockHash 
     }
 
-    let blockDto = blockWithHash |> BlockHelpers.BlockToDto
+    let blockDto = blockWithHash |> BlockToDto
     Assert.Equal(blockWithHash.block.index, blockDto.index)
     Assert.Equal(blockWithHash.block.minedBy, blockDto.minedBy)
     Assert.Equal(blockWithHash.block.data, blockDto.data)
@@ -34,7 +35,7 @@ let ``To block dto``() =
 let ``Dto to block``() =
     let blockDto = new BlockDto(1,"myMinedBy", "myData", 123,"myPreviousHash",  "myHash");
 
-    let blockWithHash = blockDto |> BlockHelpers.DtoToBlock
+    let blockWithHash = blockDto |> DtoToBlock
 
     Assert.Equal(1, blockWithHash.block.index)
     Assert.Equal("myMinedBy", blockWithHash.block.minedBy)
@@ -44,3 +45,19 @@ let ``Dto to block``() =
     Assert.Equal("myHash", blockWithHash.hash)
 
 
+[<Fact>]
+let ``Dto to Miner``()=
+    let minerDto = new Repository.Dto.MinerDto("myName",10)
+
+    let miner = {
+        name = minerDto.Name;
+        coinsMined = minerDto.CoinsMined;
+        balance = minerDto.CoinsMined
+    }
+
+    Assert.Equal("myName", miner.name); 
+    Assert.Equal(10, miner.coinsMined); 
+    Assert.Equal(10, miner.balance); 
+
+
+    

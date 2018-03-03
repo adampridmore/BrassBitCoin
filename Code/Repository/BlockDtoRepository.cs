@@ -65,7 +65,7 @@ namespace Repository
             return _collection
                 .Aggregate()
                 .Group(key => key.minedBy,
-                    g => new MinerDto { Name = g.Key, CoinsMined = g.Sum(key => 1) }
+                    g => new MinerDto (g.Key, g.Sum(key => 1))
                 )
                 .SortByDescending(co => co.CoinsMined)
                 .ToList();

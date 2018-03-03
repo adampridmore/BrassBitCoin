@@ -1,4 +1,4 @@
-﻿module BlockChain.BlockHelpers
+﻿module BlockChain.DtoHelpers
 open BlockChain.Types
 open Repository.Dto
 open System
@@ -23,3 +23,4 @@ let BlockToDto(blockWithHash:BlockWithHash) =
         blockWithHash.block.nonce,
         blockWithHash.block.previousHash,
         blockWithHash.hash);
+

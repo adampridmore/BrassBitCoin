@@ -21,32 +21,32 @@ let ``parse transaction``() =
 
 [<Fact>]
 let ``apply from transaction``()=
-    let miner = {name= "Adam"; balance=300};
+    let miner = {name= "Adam"; balance=300; coinsMined = 0};
     let transaction = { from = "Adam"; ``to``= "Dave"; ammount = 100 }
     Assert.Equal(200, (transaction |> applyTransaction miner).balance)
 
 [<Fact>]
 let ``apply to transaction``()=
-    let miner = {name= "Adam"; balance=300};
+    let miner = {name= "Adam"; balance=300;coinsMined = 0};
     let transaction = { from = "Dave"; ``to``= "Adam"; ammount = 100 }
     Assert.Equal(400, (transaction |> applyTransaction miner).balance)
 
 [<Fact>]
 let ``apply from and to transaction``()=
-    let miner = {name= "Adam"; balance=300};
+    let miner = {name= "Adam"; balance=300;coinsMined = 0};
     let transaction = { from = "Adam"; ``to``= "Adam"; ammount = 100 }
     Assert.Equal(300, (transaction |> applyTransaction miner).balance)
 
 [<Fact>]
 let ``apply other transaction``()=
-    let miner = {name= "Adam"; balance=300};
+    let miner = {name= "Adam"; balance=300;coinsMined = 0};
     let transaction = { from = "Dave"; ``to``= "Fred"; ammount = 100 }
     Assert.Equal(300, (transaction |> applyTransaction miner).balance)
 
 [<Fact>]
 let ``apply transactions to miners``()=
-    let miners = [  { name = "Adam";balance = 100};
-                    { name = "Dave";balance = 200}  ]
+    let miners = [  { name = "Adam";balance = 100;coinsMined = 0};
+                    { name = "Dave";balance = 200;coinsMined = 0}  ]
     let transaction = { from ="Adam"; ``to`` = "Dave"; ammount = 30 }
 
     let newMiners = applyTransactionToMiners miners transaction |> Seq.toList

@@ -31,10 +31,16 @@ let applyTransaction (miner:Miner) (transaction:Transaction) =
 let applyTransactionToMiners (miners: seq<Miner>) (transaction: Transaction) =
     let addMissingMiner name (miners: seq<Miner>)=
         match miners |> Seq.exists(fun m -> m.name = name) with
-        | false-> Seq.concat [miners; Seq.singleton {name = name; balance = 0}]
+        | false-> Seq.concat [miners; Seq.singleton {name = name; balance = 0; coinsMined = 0}]
         | true -> miners
 
     miners
     |> addMissingMiner (transaction.``from``)
     |> addMissingMiner (transaction.``to`` )
     |> Seq.map(fun miner -> transaction |> applyTransaction miner)
+
+ 
+//let getAllMiners(repository: Repository.BlockDtoRepository ) =
+//    let miners = repository.GetMinerDtos() |> 
+//    repository.GetTransactions()
+    
