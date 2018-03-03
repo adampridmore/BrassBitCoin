@@ -13,6 +13,10 @@ type BlockWithHash = {
     hash: string
 }
 
+type IsValidBlock = 
+  | Valid 
+  | Invalid of (string seq)
+
 type Transaction = {
     from: string;
     ``to`` : string;

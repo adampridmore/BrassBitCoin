@@ -3,6 +3,7 @@ module BlockChain.Miner
 open System
 open System.Security.Cryptography
 open BlockChain.Types
+open BlockChain.MinerHelpers
 
 let computeHash (b: byte[]) = b |> SHA256.Create().ComputeHash
 
@@ -16,10 +17,6 @@ let internal blockHash (block: Block) =
     |> hashString
 
 let internal isValidHash (hash:String) = hash.StartsWith("0000")
-
-type IsValidBlock = 
-  | Valid 
-  | Invalid of (string seq)
 
 let isValidBlock (block:BlockWithHash) (lastBlock:BlockWithHash) = 
   let validation =
@@ -37,35 +34,21 @@ let isValidBlock (block:BlockWithHash) (lastBlock:BlockWithHash) =
   | false -> Invalid(validation |> Seq.map(snd))
 
 let newBlock minedBy data (previousBlock: BlockWithHash) = 
-    let nonce, hash = 
-        Seq.initInfinite id
-        |> Seq.map(fun nonce -> 
-            let block = {
-                index = (previousBlock.block.index + 1)
-                minedBy = minedBy
-                data = data
-                nonce = nonce
-                previousHash = previousBlock.hash
-            }
-
-
-            let hash =  block |> blockHash
-            nonce,hash) // TODO - Should we create a blockWithHash here?
-        |> Seq.where (fun (_, hash) -> isValidHash hash)
-        |> Seq.head
-            
-    let block = {
-        index = previousBlock.block.index + 1;
-        minedBy = minedBy;
-        data = data;
-        nonce = nonce;
-        previousHash = previousBlock.hash;
-    }
-
-    {
-        block = block;
-        hash = hash
-    }
+    Seq.initInfinite id
+    |> Seq.map(fun nonce -> 
+        let block = {
+            index = (previousBlock.block.index + 1)
+            minedBy = minedBy
+            data = data
+            nonce = nonce
+            previousHash = previousBlock.hash
+        }
+        {
+            block = block;
+            hash = block |> blockHash
+        }
+    )
+    |> Seq.find (fun (blockWithHash) -> blockWithHash.hash |> isValidHash)
 
 let genesisBlock =
   { 
@@ -79,24 +62,6 @@ let genesisBlock =
       }
     hash = "000021C1766F55BD5D413F0AC128A5D3D6B50E4F0D608B653209C4D468232C11" // block |> blockHash 
   }
-
-let stringReduce seperator (strings: seq<string>) = 
-  strings 
-  |> Seq.reduce (fun a b -> sprintf "%s%s%s" a seperator b)
-
-let sprintBlock (block: BlockWithHash) = 
-  seq{
-    yield block.block.index |> string
-    yield block.block.minedBy
-    yield block.block.data
-    yield block.block.previousHash
-    yield block.block.nonce |> string
-    yield block.hash
-  } |> (stringReduce " ")
-
-//let numbeOfBlocksToGenerate = 5
-
-let tuple a = (a, a)
 
 let blockchain numbeOfBlocksToGenerate minedBy lastBlock =
   Seq.initInfinite id

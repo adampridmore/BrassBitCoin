@@ -55,7 +55,7 @@ namespace BlockChainWeb.Controllers
             var isValidBlock = Miner.isValidBlock(blockWithHash, BlockHelpers.DtoToBlock(lastBlock));
             if (isValidBlock.IsInvalid)
             {
-                var invalid = isValidBlock as Miner.IsValidBlock.Invalid;
+                var invalid = isValidBlock as Types.IsValidBlock.Invalid;
                 var errors = invalid.Item.ToList();
 
                 return Tuple.Create<bool, IList<string>>(false, errors);
