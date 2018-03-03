@@ -1,4 +1,4 @@
-﻿namespace Repository
+﻿namespace Repository.Dto
 {
     public class MinerDto
     {

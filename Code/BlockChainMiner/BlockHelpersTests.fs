@@ -3,6 +3,7 @@
 open Xunit
 open BlockChain.Types
 open BlockChain
+open Repository.Dto
 
 [<Fact>]
 let ``To block dto``() =
@@ -30,7 +31,7 @@ let ``To block dto``() =
 
 [<Fact>]
 let ``Dto to block``() =
-    let blockDto = new Repository.BlockDto(1,"myMinedBy", "myData", 123,"myPreviousHash",  "myHash");
+    let blockDto = new BlockDto(1,"myMinedBy", "myData", 123,"myPreviousHash",  "myHash");
 
     let blockWithHash = blockDto |> BlockHelpers.DtoToBlock
 

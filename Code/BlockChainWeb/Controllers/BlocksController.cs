@@ -5,6 +5,7 @@ using BlockChainWeb.Models;
 using System.Linq;
 using System.Net;
 using System.Collections.Generic;
+using Repository.Dto;
 
 namespace BlockChainWeb.Controllers
 {
@@ -146,12 +147,7 @@ namespace BlockChainWeb.Controllers
                 yield return "Invalid previousHash.";
             }
         }
-
-        private static void AssertValidBlock(Repository.BlockDto lastBlock, Types.BlockWithHash blockWithHash)
-        {
-
-        }
-
+        
         public IActionResult Index()
         {
             return View(_repository.TryGetLastBlock());

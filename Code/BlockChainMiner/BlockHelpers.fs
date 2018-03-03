@@ -1,8 +1,8 @@
 ﻿module BlockChain.BlockHelpers
 open BlockChain.Types
-open Repository
+open Repository.Dto
 
-let DtoToBlock (lastBlockDto:Repository.BlockDto ) =
+let DtoToBlock (lastBlockDto:BlockDto ) =
     {
         block = {
                 index = lastBlockDto.index;
@@ -15,7 +15,7 @@ let DtoToBlock (lastBlockDto:Repository.BlockDto ) =
     }
 
 let BlockToDto(blockWithHash:BlockWithHash) =
-    new Repository.BlockDto(
+    new BlockDto(
         blockWithHash.block.index,
         blockWithHash.block.minedBy,
         blockWithHash.block.data,

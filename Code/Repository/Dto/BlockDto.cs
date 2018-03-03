@@ -3,9 +3,8 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
 
-namespace Repository
+namespace Repository.Dto
 {
-
     public class BlockDto
     {
         [BsonId(IdGenerator = typeof(ObjectIdGenerator))]
