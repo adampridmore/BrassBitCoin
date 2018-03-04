@@ -18,7 +18,8 @@
 
     <div class="form-group">
         <label>data:</label>
-        <input class="form-control" type="text" name="data" id="data" />
+        <p>Note: Lines are assumed to be seperated by \n.</p>
+        <textarea class="form-control" name="text" id="data" cols="40" rows="5"></textarea>
     </div>
 
     <div class="form-group">
@@ -69,7 +70,7 @@
                     nonce: $('#nonce').val(),
                     hash: $('#hash').val()
                 };
-                
+
                 $.ajax({
                     type: "POST",
                     url: url,
@@ -85,7 +86,7 @@
                         console.log("error");
 
                         $('#errorMessage').html(data.responseJSON.errorMessage);
-                        $('#dAlert').show();                        
+                        $('#dAlert').show();
                     }
                 });
 

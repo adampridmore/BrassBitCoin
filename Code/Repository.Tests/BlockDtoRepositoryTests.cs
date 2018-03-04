@@ -97,7 +97,7 @@ namespace Repository.UnitTests
                 "Transaction, Adam,Dave, 2"
             };
 
-            var transactionText = string.Join(System.Environment.NewLine, transactionLines);
+            var transactionText = string.Join("\n", transactionLines);
 
             repository.Save(new BlockDto {
                 index = 1,

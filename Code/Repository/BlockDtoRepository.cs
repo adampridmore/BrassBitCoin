@@ -9,12 +9,14 @@ namespace Repository
 {
     public class BlockDtoRepository
     {
+        private readonly string lineEndin = "\n";
+
         private readonly IMongoCollection<BlockDto> _collection;
 
         public BlockDtoRepository(string mongoUrl)
         {
-            var url = new MongoDB.Driver.MongoUrl(mongoUrl);
-            var client = new MongoDB.Driver.MongoClient(url);
+            var url = new MongoUrl(mongoUrl);
+            var client = new MongoClient(url);
             var database = client.GetDatabase(url.DatabaseName);
             _collection = database.GetCollection<BlockDto>("blockChain");
         }
@@ -93,7 +95,7 @@ namespace Repository
         private IEnumerable<TransactionDto> BlockToTansactionDtos(string data)
         {
             return data
-                .Split(new[] { Environment.NewLine }, StringSplitOptions.None)
+                .Split(new[] { lineEndin }, StringSplitOptions.None)
                 .Select(line => TryParseLine(line))
                 .Where(transaction => transaction != null);
         }

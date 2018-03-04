@@ -45,3 +45,5 @@ Transaction,<from miner name>,<to miner name>,<integer amount>
 e.g.
 
 Transaction,Adam,Dave,1
+
+new lines \n (and not \r\n)
