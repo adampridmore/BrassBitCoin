@@ -1,4 +1,4 @@
-﻿module minerTests
+﻿module BlockChain.minerTests
 open Xunit
 open BlockChain.Types
 open BlockChain.Miner

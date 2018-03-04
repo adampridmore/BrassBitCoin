@@ -87,18 +87,18 @@ namespace Repository
         private IEnumerable<TransactionDto> BlockToTansactionDtos(string data)
         {
             return data
-                .Split(Environment.NewLine)
+                .Split(new[] { Environment.NewLine }, StringSplitOptions.None)
                 .Select(line => TryParseLine(line))
                 .Where(transaction => transaction != null);
         }
-        internal static TransactionDto TryParseLine(string line)
+        public static TransactionDto TryParseLine(string line)
         {
             if (!line.StartsWith("Transaction"))
             {
                 return null;
             }
 
-            var lines = line.Split(",");
+            var lines = line.Split(new[] { "," }, StringSplitOptions.None);
             if (lines.Length != 4)
             {
                 return null;

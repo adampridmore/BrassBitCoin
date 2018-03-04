@@ -7,16 +7,16 @@ open BlockChain.MinerHelpers
 
 let computeHash (b: byte[]) = b |> SHA256.Create().ComputeHash
 
-let internal hashString (content : String) = 
+let hashString (content : String) = 
     let bytes = content |> System.Text.ASCIIEncoding.UTF8.GetBytes |> computeHash
     BitConverter.ToString( bytes ).Replace("-", "")
 
-let internal blockHash (block: Block) = 
+let blockHash (block: Block) = 
     [block.index |> string; block.minedBy; block.data; block.previousHash; block.nonce |> string]
     |> Seq.reduce (fun a b -> sprintf "%s %s" a b)
     |> hashString
 
-let internal isValidHash (hash:String) = hash.StartsWith("0000")
+let public isValidHash (hash:String) = hash.StartsWith("0000")
 
 let isValidBlock (block:BlockWithHash) (lastBlock:BlockWithHash) = 
   let validation =

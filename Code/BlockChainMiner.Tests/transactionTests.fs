@@ -1,4 +1,4 @@
-﻿module transactionTests
+﻿module BlockChain.transactionTests
 open Xunit
 open BlockChain.Types
 open BlockChain.Transaction

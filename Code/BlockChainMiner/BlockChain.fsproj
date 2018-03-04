@@ -1,32 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
-    <OutputType>Library</OutputType>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <!-- <OutputType>Library</OutputType> -->
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="types.fs" />
     <Compile Include="DtoHelpers.fs" />
-    <Compile Include="DtoHelpersTests.fs" />
     <Compile Include="Library.fs" />
     <Compile Include="minerHelpers.fs" />
     <Compile Include="miner.fs" />
-    <Compile Include="minerTests.fs" />
     <Compile Include="transactions.fs" />
-    <Compile Include="transactionTests.fs" />
-
-  </ItemGroup>
-  <ItemGroup>
     <None Include="mine_next_block.fsx" />
     <None Include="script_transactions.fsx" />
     <None Include="script.fsx" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
-    <PackageReference Include="xunit" Version="2.3.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
-    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
+    <ProjectReference Include="..\Repository\Repository.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Repository\Repository.csproj" />
+    <PackageReference Update="FSharp.Core" Version="4.3.4" />
   </ItemGroup>
 </Project>
