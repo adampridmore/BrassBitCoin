@@ -5,8 +5,6 @@ open BlockChain.Types
 open BlockChain
 open BlockChain.DtoHelpers
 open Repository.Dto
-open System
-open System.Reflection
 
 [<Fact>]
 let ``To block dto``() =

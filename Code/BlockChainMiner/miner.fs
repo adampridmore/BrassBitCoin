@@ -18,9 +18,15 @@ let blockHash (block: Block) =
 
 let public isValidHash (hash:String) = hash.StartsWith("0000")
 
+let private minedByRegularExpression = new System.Text.RegularExpressions.Regex("^[a-zA-Z0-9]*$");
+
+let isValidMinedBy minedBy = 
+    minedByRegularExpression.IsMatch(minedBy)
+
 let isValidBlock (block:BlockWithHash) (lastBlock:BlockWithHash) = 
   let validation =
     seq{
+      yield block.block.minedBy |> isValidMinedBy, "MinedBy is invalid, must be alpha-numeric only."
       yield block.block |> blockHash = block.hash, "Hash does not match hash of block." 
       yield (block.hash |> isValidHash), "Hash does not meet rules."
       yield (lastBlock.hash = block.block.previousHash), "Previous hash does not match."

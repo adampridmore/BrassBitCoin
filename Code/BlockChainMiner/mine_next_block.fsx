@@ -36,5 +36,5 @@ let latestBlock = DtoHelpers.DtoToBlock(repository.TryGetLastBlock())
 latestBlock
 |> Miner.newBlock "Dave" data
 |> sprintBlock  
-|> printf "%s"
+|> printf "%s\n"
 

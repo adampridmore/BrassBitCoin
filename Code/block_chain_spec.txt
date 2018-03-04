@@ -4,7 +4,7 @@ Yorkshire Block Chain
 A block is defined as the following fields:
 
     index :int
-    minedBy: string
+    minedBy: string (just alphanumeric characters with no spaces)
     data :  string
     previousHash : string
     nonce: int

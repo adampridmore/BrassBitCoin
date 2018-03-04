@@ -78,8 +78,15 @@ let ``is not a valid block - hash isn't hash of block``()=
 let ``is not a valid block - invalid hash``() =
   let validBlock = createNewBlock()
   let notAValidBlock = {validBlock with hash = "1234"}
-  
+
   notAValidBlock |> assertInvalidBlock "Hash does not meet rules."
+
+[<Fact>]
+let ``is not a valid block - invalid minerName``() =
+  let validBlock = createNewBlock()
+  let notAValidBlock = {validBlock with block = {validBlock.block with minedBy = "Not Valid"}}
+  notAValidBlock |> assertInvalidBlock "MinedBy is invalid, must be alpha-numeric only."
+
 
 [<Fact>]
 let ``is not a valid block - block parent hash is icorret``() =
@@ -92,11 +99,3 @@ let ``is not a valid block - incorrect index``() =
   let validBlock = createNewBlock()
   let notAValidBlock = {validBlock with block = {validBlock.block with index = 99}}
   notAValidBlock |> assertInvalidBlock "Invalid index."
-
-
-
-//[<Fact>]
-//let ``Block with transcations``() =
-//  let previousBlock = createNewBlock()
-  
-//  previousBlock |> Miner.newBlock "Adam" "Transaction:'Adam'->'Dave':1" |> sprintf "%A"
