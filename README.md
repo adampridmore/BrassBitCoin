@@ -1,5 +1,3 @@
-# BrassBitCoin
-=======
 # Leeds Code Dojo - Mining for BrassBitCoin 
 
 The challenge it to mine and create some Yorkshire-BrassBitCoins.
