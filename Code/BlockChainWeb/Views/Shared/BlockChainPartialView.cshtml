@@ -1,0 +1,65 @@
+﻿@model IList<Repository.Dto.BlockDto>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>Created</td>
+            <td>Index</td>
+            <td>Mined by</td>
+            <td>Data</td>
+            <td>
+                <b>P</b>revious Hash<br />
+                <b>H</b>ash
+            </td>
+            <td>Nonce</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var index = 0;
+        }
+        @foreach (var block in Model)
+        {
+            var blockTextId = $"blockText_index";
+            index++;
+            <tr>
+                <td>
+                    @block.createdTimeStampUtc.Value.ToString("s")
+                </td>
+                <td>
+                    @block.index
+                </td>
+                <td>
+                    @block.minedBy
+                </td>
+                <td>
+                    @block.data
+                </td>
+                <td>
+                    <b>P:</b> @block.previousHash<br />
+                    <b>H:</b> @block.hash
+                </td>
+                <td>
+                    @block.nonce
+                </td>
+                <td>
+                    @{
+                        var blockText = BlockChain.MinerHelpers.sprintBlock(BlockChain.DtoHelpers.DtoToBlock(block));
+                        var inputId = $"blockTest_{index}";
+                    }
+                    <input id="@inputId" type="text" name="country" value="@blockText" readonly data-tip="index minedBy data previousHash nonce hash">
+                    <button onclick="copyInputText('@inputId')">Copy Block</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    function copyInputText(id) {
+        var copyText = document.getElementById(id);
+        copyText.select();
+        document.execCommand("Copy");
+    }
+</script>

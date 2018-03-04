@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <!-- <OutputType>Library</OutputType> -->
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="types.fs" />
+    <Compile Include="DtoHelpers.fs" />
+    <Compile Include="Library.fs" />
+    <Compile Include="minerHelpers.fs" />
+    <Compile Include="miner.fs" />
+    <Compile Include="transactions.fs" />
+    <None Include="mine_next_block.fsx" />
+    <None Include="script_transactions.fsx" />
+    <None Include="script.fsx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Repository\Repository.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="4.3.4" />
+  </ItemGroup>
+</Project>

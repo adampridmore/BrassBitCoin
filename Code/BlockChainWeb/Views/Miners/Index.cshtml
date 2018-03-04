@@ -1,0 +1,37 @@
+﻿@model IList<BlockChain.Types.Miner>
+@{
+    ViewData["Title"] = "Miner Balances";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    Note:You don't have to have mined any coins to have a balance. As long as someones sent you some coins.
+</p>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Coins Mined</td>
+            <td>Balance</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var coinOwner in Model)
+        {
+            <tr>
+                <td>
+                    @coinOwner.name
+                </td>
+                <td>
+                    @coinOwner.coinsMined
+                </td>
+                <td>
+                    @coinOwner.balance
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

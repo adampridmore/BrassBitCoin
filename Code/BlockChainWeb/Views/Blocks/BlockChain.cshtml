@@ -1,0 +1,12 @@
+﻿@model IList<Repository.Dto.BlockDto>
+@{
+    ViewData["Title"] = "Blockchain";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+All the blocks in the blockchain. Back to <a asp-area="" asp-controller="Blocks" asp-action="Index">latest block</a>.</p>
+
+
+@Html.Partial("BlockChainPartialView", Model)
+

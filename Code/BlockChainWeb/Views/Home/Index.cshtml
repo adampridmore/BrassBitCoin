@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="jumbotron">
+    <div class="container">
+        <div class="col-lg-8">
+            <h1>The Yorkshire BrassBitCoin</h1>
+            <a class="btn btn-primary btn-lg" role="button" asp-area="" asp-controller="Home" asp-action="BlockchainDefinition">Blockchain definition &raquo;</a>
+        </div>
+        <div class="col-lg-4">
+            <img src="~/images/BrassBitCoin_Medium.png" class="img-responsive" />
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h2>View blockchain</h2>
+        <ul>
+            <li>View the latest <a asp-area="" asp-controller="Blocks" asp-action="">block</a></li>
+            <li>View all the <a asp-area="" asp-controller="Blocks" asp-action="BlockChain">blocks</a> in the blockchain</li>
+            <li>View all the <a asp-area="" asp-controller="Blocks" asp-action="Transactions">transactions</a> in the blockchain</li>
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <h2>Coin owners</h2>
+        <ul>
+            <li>A list of <a asp-area="" asp-controller="Miners" asp-action="Index">coin owners</a> and how many coins they have.</li>
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <h2>Upload mined coin</h2>
+        <ul>
+            <li>Mined a coin? Upload it <a asp-area="" asp-controller="Blocks" asp-action="Upload">here</a>!</li>
+        </ul>
+    </div>
+</div>

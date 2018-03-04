@@ -1,0 +1,38 @@
+﻿@model IEnumerable<BlockChain.Types.Transaction>
+@{
+    ViewData["Title"] = "Transactions";
+}
+
+<h2>Transactions</h2>
+
+Back to <a asp-area="" asp-controller="Blocks" asp-action="Index">latest block</a>.</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>From</td>
+            <td>To</td>
+            <td>Amount</td>
+            <td>Created in this block index</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var transaction in Model)
+        {
+            <tr>
+                <td>
+                    @transaction.from
+                </td>
+                <td>
+                    @transaction.to
+                </td>
+                <td>
+                    @transaction.amount
+                </td>
+                <td>
+                    @transaction.blockIndex
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

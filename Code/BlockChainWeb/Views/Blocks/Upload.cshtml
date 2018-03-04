@@ -1,0 +1,100 @@
+﻿@model UploadViewModel
+@{
+    ViewData["Title"] = "Upload";
+}
+
+<h2>Upload</h2>
+
+<div>
+    <div class="form-group">
+        <label>index</label>
+        <input class="form-control" type="text" name="index" id="index" />
+    </div>
+
+    <div class="form-group">
+        <label>minedBy:</label>
+        <input class="form-control" type="text" name="minedBy" id="minedBy" />
+    </div>
+
+    <div class="form-group">
+        <label>data:</label>
+        <p>Note: Lines are assumed to be seperated by \n.</p>
+        <textarea class="form-control" name="text" id="data" cols="40" rows="5"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label>previousHash:</label>
+        <input class="form-control" type="text" name="previousHash" id="previousHash" />
+    </div>
+
+    <div class="form-group">
+        <label>nonce:</label>
+        <input class="form-control" type="text" name="nonce" id="nonce" />
+    </div>
+
+    <div class="form-group">
+        <label>hash:</label>
+        <input class="form-control" type="text" name="hash" id="hash" />
+    </div>
+
+    <button id="bSubmit" class="btn btn-primary">Submit</button>
+
+    <div id="dBlockAdded" class="alert alert-success" hidden="hidden">
+        <strong>Block added to blockchain!</strong>
+    </div>
+
+    <div id="dAlert" class="alert alert-danger" hidden="hidden">
+        <strong>Invalid block</strong>
+        <p id="errorMessage"></p>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts{
+    <script type="text/javascript">
+       var url = "@Url.Content("~/Blocks/Upload")";
+
+        $(document).ready(function () {
+            $('#bSubmit').click(function () {
+                $('#dAlert').hide();
+                $('#dBlockAdded').hide();
+
+                var block = {
+                    index: $('#index').val(),
+                    minedBy: $('#minedBy').val(),
+                    data: $('#data').val(),
+                    previousHash: $('#previousHash').val(),
+                    nonce: $('#nonce').val(),
+                    hash: $('#hash').val()
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    contentType: 'application/json',
+                    data: JSON.stringify(block),
+                    success: function () {
+                        console.log("sucess");
+
+                        $('#dBlockAdded').show();
+
+                    },
+                    error: function (data) {
+                        console.log("error");
+
+                        $('#errorMessage').html(data.responseJSON.errorMessage);
+                        $('#dAlert').show();
+                    }
+                });
+
+                console.log("hello");// $.ajax.
+            });
+        });
+    </script>
+}
+
+
+
