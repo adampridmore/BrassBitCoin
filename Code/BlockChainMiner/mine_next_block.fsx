@@ -1,26 +1,35 @@
 #I @".\bin\Debug\netstandard2.0"
+#I @".\bin\Debug\netstandard2.0"
+
+#I @"C:\Users\Adam\.nuget\packages\mongodb.driver\2.5.0\lib\netstandard1.5\"
+#I @"C:\Users\Adam\.nuget\packages\mongodb.bson\2.5.0\lib\netstandard1.5\"
+#I @"C:\Users\Adam\.nuget\packages\mongodb.driver.core\2.5.0\lib\netstandard1.5\"
+
 #r @"Repository.dll"
 #r @"BlockChain.dll"
+
+#r @"MongoDB.Driver.dll"
+#r @"MongoDB.Bson.dll"
+#r @"MongoDB.Driver.Core.dll"
 
 open BlockChain.Miner
 open BlockChain.MinerHelpers
 open BlockChain
 
-let data = 
-  //  [   
-        "Transaction,Dave,Fred,5"
-  //  ]
-//    |> stringReduce System.Environment.NewLine
+let data = "Transaction,Adam,Fred,2"
 
-"11 Dave Transaction,Adam,Dave,5 0000D7B3DB4778929CAB77A32B2C11D9A92A59FF70245C519EC21733EB1799BE 20436 0000439FB6C3954F5E4E77D611BFC566EE964538BAA38F6604C805F1BC7C032F"
+"5 Adam 4 0000CA2C984CDF70E03269309026979A18FA25EBBAB16BD90C88F92985992609 22889 0000CBFE51BE34FAD0DE5720D6253DD23556B909B2D9F1D412CF552CDB76EB91"
 |> parseBlock
 |> Miner.newBlock "Dave" data
 |> sprintBlock
 |> printf "%s"
 
-//let miners = (Seq.empty<BlockChain.Types.Miner>)
+let mongoUrl = "mongodb://localhost/BlockChain"
+let repository = new Repository.BlockDtoRepository(mongoUrl)
+let latestBlock = DtoHelpers.DtoToBlock(repository.TryGetLastBlock())
 
-//data 
-//|> Transaction.parseSingleTransaction
-//|> Option.get
-//|> Transaction.applyTransactionToMiners miners
+latestBlock
+|> Miner.newBlock "Dave" data
+|> sprintBlock
+|> printf "%s"
+
