@@ -55,7 +55,7 @@ Transaction,<from miner name>,<to miner name>,<integer amount>
 Transaction,Adam,Dave,1
 ```
 
-A block can have multiple transactions, seperated by a ``\n`` character (and not a ``\r\n``.)
+A block can have multiple transactions, separated by a ``\n`` character (and not a ``\r\n``.)
 
 ```
 Transaction,Adam,Dave,5
@@ -65,7 +65,7 @@ Transaction,Fred,Betty,2
 ## Transactions Notes
 
 * **No** whitespace padding
-* _Transactions_ are seperated by a single _\n_ (And **not** a ``\r\n``).
+* _Transactions_ are separated by a single _\n_ (And **not** a ``\r\n``).
 * The last _transaction_ does **not** have a trailing `\n`
 * Obey the _minedBy_ name rules (**alpha-numeric only**) for _from_ and _to_ fields.
 * _Ammount_ in a transaction is in whole number of coins.
