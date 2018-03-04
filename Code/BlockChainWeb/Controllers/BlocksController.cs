@@ -41,7 +41,7 @@ namespace BlockChainWeb.Controllers
             var lastBlock = _repository.TryGetLastBlock();
             if (lastBlock == null)
             {
-                throw new ApplicationException("No blocks in block chain");
+                throw new ApplicationException("No blocks in blockchain");
             }
 
             Types.Block block = new Types.Block(

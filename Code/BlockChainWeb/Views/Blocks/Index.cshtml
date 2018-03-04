@@ -6,9 +6,8 @@
     ViewData["Title"] = "Latest Block";
 }
 
-<h2>Latest Block</h2>
-
-<p>View all the blocks in the <a asp-area="" asp-controller="Blocks" asp-action="BlockChain">Blockchain</a>.</p>
+<h2>@ViewData["Title"]</h2>
+This is the latest block in the blockchain. Go here to view all the blocks in the <a asp-area="" asp-controller="Blocks" asp-action="BlockChain">blockchain</a>.</p>
 
 @if (Model == null)
 {

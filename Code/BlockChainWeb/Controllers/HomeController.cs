@@ -68,15 +68,6 @@ namespace BlockChainWeb.Controllers
             return Redirect("~/Home/About");
         }
 
-        public IActionResult CoinOwners()
-        {
-            var miners = Transaction.getAllMiners(_repository).ToList();
-
-            //var coinOwners = _repository.GetMinerDtos();
-
-            return View(miners);
-        }
-                
         private void SaveBlock(Types.BlockWithHash blockWithHash)
         {
             var blockDto = DtoHelpers.BlockToDto(blockWithHash);
