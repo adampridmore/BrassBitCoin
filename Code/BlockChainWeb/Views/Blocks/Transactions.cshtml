@@ -13,6 +13,7 @@ Back to <a asp-area="" asp-controller="Blocks" asp-action="Index">latest block</
             <td>From</td>
             <td>To</td>
             <td>Ammount</td>
+            <td>Created in this block index</td>
         </tr>
     </thead>
     <tbody>
@@ -28,10 +29,10 @@ Back to <a asp-area="" asp-controller="Blocks" asp-action="Index">latest block</
                 <td>
                     @transaction.ammount
                 </td>
-
+                <td>
+                    @transaction.blockIndex
+                </td>
             </tr>
-
-
         }
     </tbody>
 </table>

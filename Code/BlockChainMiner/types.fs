@@ -1,15 +1,15 @@
 module BlockChain.Types
 
 type Block = {
-    index :int
+    index: int
     minedBy: string
-    data :  string
-    previousHash : string
+    data:  string
+    previousHash: string
     nonce: int
 }
 
 type BlockWithHash = {
-    block: Block;
+    block: Block
     hash: string
 }
 
@@ -18,13 +18,14 @@ type IsValidBlock =
   | Invalid of (string seq)
 
 type Transaction = {
-    from: string;
-    ``to`` : string;
+    from: string
+    ``to``: string
     ammount: int
+    blockIndex: int
 }
 
 type Miner = {
-    name: string;
-    balance: int;
+    name: string
+    balance: int
     coinsMined: int
 }

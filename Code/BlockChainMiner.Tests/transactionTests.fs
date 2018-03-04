@@ -7,14 +7,14 @@ open Repository.Dto
 [<Fact>]
 let ``transaction to string``() =
     let txt =
-        { from = "Adam"; ``to``= "Dave"; ammount = 100 }
+        { from = "Adam"; ``to``= "Dave"; ammount = 100 ; blockIndex=1}
         |> transactionToString 
     
     Assert.Equal("Transaction,Adam,Dave,100", txt)
 
 [<Fact>]
 let ``parse transaction``() =
-    let t = parseSingleTransaction "Transaction,Adam,Dave,100"
+    let t = parseSingleTransaction "Transaction,Adam,Dave,100" 1
     Assert.True(t.IsSome)
     Assert.Equal("Adam", t.Value.from)
     Assert.Equal("Dave", t.Value.``to``)
@@ -23,32 +23,32 @@ let ``parse transaction``() =
 [<Fact>]
 let ``apply from transaction``()=
     let miner = {name= "Adam"; balance=300; coinsMined = 0};
-    let transaction = { from = "Adam"; ``to``= "Dave"; ammount = 100 }
+    let transaction = { from = "Adam"; ``to``= "Dave"; ammount = 100 ; blockIndex = 1}
     Assert.Equal(200, (transaction |> applyTransaction miner).balance)
 
 [<Fact>]
 let ``apply to transaction``()=
     let miner = {name= "Adam"; balance=300;coinsMined = 0};
-    let transaction = { from = "Dave"; ``to``= "Adam"; ammount = 100 }
+    let transaction = { from = "Dave"; ``to``= "Adam"; ammount = 100 ; blockIndex = 1 }
     Assert.Equal(400, (transaction |> applyTransaction miner).balance)
 
 [<Fact>]
 let ``apply from and to transaction``()=
     let miner = {name= "Adam"; balance=300;coinsMined = 0};
-    let transaction = { from = "Adam"; ``to``= "Adam"; ammount = 100 }
+    let transaction = { from = "Adam"; ``to``= "Adam"; ammount = 100  ; blockIndex = 1}
     Assert.Equal(300, (transaction |> applyTransaction miner).balance)
 
 [<Fact>]
 let ``apply other transaction``()=
     let miner = {name= "Adam"; balance=300;coinsMined = 0};
-    let transaction = { from = "Dave"; ``to``= "Fred"; ammount = 100 }
+    let transaction = { from = "Dave"; ``to``= "Fred"; ammount = 100  ; blockIndex = 1}
     Assert.Equal(300, (transaction |> applyTransaction miner).balance)
 
 [<Fact>]
 let ``apply transactions to miners``()=
     let miners = [  { name = "Adam";balance = 100;coinsMined = 0};
                     { name = "Dave";balance = 200;coinsMined = 0}  ]
-    let transaction = { from ="Adam"; ``to`` = "Dave"; ammount = 30 }
+    let transaction = { from ="Adam"; ``to`` = "Dave"; ammount = 30  ; blockIndex = 1}
 
     let newMiners = applyTransactionToMiners miners transaction |> Seq.toList
     
@@ -61,7 +61,7 @@ let ``apply transactions to miners``()=
 [<Fact>]
 let ``apply transactions to miners when missing miner``()=
     let miners = [  ]
-    let transaction = { from ="Adam"; ``to`` = "Dave"; ammount = 30 }
+    let transaction = { from ="Adam"; ``to`` = "Dave"; ammount = 30  ; blockIndex = 1}
 
     let newMiners = applyTransactionToMiners miners transaction |> Seq.toList
     

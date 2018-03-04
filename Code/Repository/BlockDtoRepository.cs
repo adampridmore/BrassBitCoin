@@ -89,17 +89,17 @@ namespace Repository
         private IEnumerable<TransactionDto> BlockToTansactionDtos(IList<BlockDto> blocks)
         {
             return blocks
-                .SelectMany(b => BlockToTansactionDtos(b.data));
+                .SelectMany(b => BlockToTansactionDtos(b));
         }
 
-        private IEnumerable<TransactionDto> BlockToTansactionDtos(string data)
+        private IEnumerable<TransactionDto> BlockToTansactionDtos(BlockDto block)
         {
-            return data
+            return block.data
                 .Split(new[] { lineEndin }, StringSplitOptions.None)
-                .Select(line => TryParseLine(line))
+                .Select(line => TryParseLine(line, block))
                 .Where(transaction => transaction != null);
         }
-        public static TransactionDto TryParseLine(string line)
+        public static TransactionDto TryParseLine(string line, BlockDto block)
         {
             if (!line.StartsWith("Transaction"))
             {
@@ -117,7 +117,7 @@ namespace Repository
                 return null;
             }
 
-            return new TransactionDto(lines[1], lines[2], ammount);
+            return new TransactionDto(lines[1], lines[2], ammount, block.index);
         }
     }
 }

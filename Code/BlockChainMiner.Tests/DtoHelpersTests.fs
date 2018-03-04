@@ -59,11 +59,12 @@ let ``Dto to Miner``()=
 [<Fact>]
 let ``Dto to transaction``()= 
     let transaction = 
-        new TransactionDto("myFrom", "myTo", 123)
+        new TransactionDto("myFrom", "myTo", 123, 100)
         |> transactionDtoToTransaction
 
     Assert.Equal("myFrom", transaction.from)
     Assert.Equal("myTo", transaction.``to``)
     Assert.Equal(123, transaction.ammount)
+    Assert.Equal(100, transaction.blockIndex)
 
     

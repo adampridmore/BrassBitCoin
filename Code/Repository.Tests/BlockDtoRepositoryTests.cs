@@ -93,8 +93,8 @@ namespace Repository.UnitTests
         public void GetTransactions()
         {
             var transactionLines = new List<string>{
-                "Transaction, Adam,Dave, 1",
-                "Transaction, Adam,Dave, 2"
+                "Transaction,Adam,Dave, 1",
+                "Transaction,Adam,Dave, 2"
             };
 
             var transactionText = string.Join("\n", transactionLines);
@@ -108,19 +108,24 @@ namespace Repository.UnitTests
             var transactions = repository.GetTransactions();
 
             Assert.Equal(2, transactions.Count);
+            Assert.Equal("Adam", transactions[0].from);
+            Assert.Equal("Dave", transactions[0].to);
+            Assert.Equal(1, transactions[0].blockIndex);
+            Assert.Equal(1, transactions[0].ammount);
+
         }
 
         [Fact]
         public void TryParseInvalidLine()
         {
-            var transaction = BlockDtoRepository.TryParseLine("InvalidTransaction");
+            var transaction = BlockDtoRepository.TryParseLine("InvalidTransaction", new BlockDto());
             Assert.Null(transaction);
         }
 
         [Fact]
         public void TryParseLine()
         {
-            var transaction = BlockDtoRepository.TryParseLine("Transaction,Adam,Dave,123");
+            var transaction = BlockDtoRepository.TryParseLine("Transaction,Adam,Dave,123", new BlockDto());
             Assert.NotNull(transaction);
 
             Assert.Equal("Adam", transaction.from);
@@ -131,7 +136,7 @@ namespace Repository.UnitTests
         [Fact]
         public void TryParseInvalidLine_wrong_number_of_fields()
         {
-            var transaction = BlockDtoRepository.TryParseLine("Transaction,Adam,Dave,123,");
+            var transaction = BlockDtoRepository.TryParseLine("Transaction,Adam,Dave,123,", new BlockDto());
             Assert.Null(transaction);
         }
 
@@ -139,7 +144,7 @@ namespace Repository.UnitTests
         [Fact]
         public void TryParseInvalidLine_invalid_ammount()
         {
-            var transaction = BlockDtoRepository.TryParseLine("Transaction,Adam,Dave,1.2");
+            var transaction = BlockDtoRepository.TryParseLine("Transaction,Adam,Dave,1.2", new BlockDto());
             Assert.Null(transaction);
         }
 
