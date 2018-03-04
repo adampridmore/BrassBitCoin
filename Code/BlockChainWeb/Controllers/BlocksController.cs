@@ -80,7 +80,6 @@ namespace BlockChainWeb.Controllers
                     });
             }
 
-
             try
             {
                 var result = TryUploadBlock(
@@ -151,6 +150,12 @@ namespace BlockChainWeb.Controllers
         public IActionResult Index()
         {
             return View(_repository.TryGetLastBlock());
+        }
+
+        public IActionResult Transactions()
+        {
+            var transactions = Transaction.getAllTransations(_repository);
+            return View("Transactions", transactions);
         }
     }
 }

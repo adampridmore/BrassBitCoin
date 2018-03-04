@@ -4,7 +4,11 @@
 }
 
 <h2>@ViewData["Title"]</h2>
-You don't have to have mined any coins to have a balance. As long as someones sent you some coins.
+
+<p>
+    Note:You don't have to have mined any coins to have a balance. As long as someones sent you some coins.
+</p>
+
 
 <table class="table table-striped">
     <thead>
@@ -15,19 +19,19 @@ You don't have to have mined any coins to have a balance. As long as someones se
         </tr>
     </thead>
     <tbody>
-        @foreach(var coinOwner in Model)
+        @foreach (var coinOwner in Model)
         {
-        <tr>
-            <td>
-                @coinOwner.name
-            </td>
-            <td>
-                @coinOwner.coinsMined
-            </td>
-            <td>
-                @coinOwner.balance
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @coinOwner.name
+                </td>
+                <td>
+                    @coinOwner.coinsMined
+                </td>
+                <td>
+                    @coinOwner.balance
+                </td>
+            </tr>
         }
     </tbody>
 </table>

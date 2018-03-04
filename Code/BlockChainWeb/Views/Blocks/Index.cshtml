@@ -7,7 +7,13 @@
 }
 
 <h2>@ViewData["Title"]</h2>
-This is the latest block in the blockchain. Go here to view all the blocks in the <a asp-area="" asp-controller="Blocks" asp-action="BlockChain">blockchain</a>.</p>
+This is the latest block in the blockchain.
+<p>
+    <ul class="list">
+        <li>Go here to view all the <a asp-area="" asp-controller="Blocks" asp-action="BlockChain">blocks</a> in the blockchain.</li>
+        <li>Go here to view all the <a asp-area="" asp-controller="Blocks" asp-action="Transactions">transactions</a> in the blockchain.</li>
+    </ul>
+</p>
 
 @if (Model == null)
 {

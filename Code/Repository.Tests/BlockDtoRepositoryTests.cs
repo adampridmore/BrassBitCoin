@@ -1,4 +1,3 @@
-using Repository;
 using Repository.Dto;
 using System.Collections.Generic;
 using Xunit;
@@ -144,6 +143,19 @@ namespace Repository.UnitTests
         {
             var transaction = BlockDtoRepository.TryParseLine("Transaction,Adam,Dave,1.2");
             Assert.Null(transaction);
+        }
+
+        [Fact]
+        public void GetAll()
+        {
+            repository.Save(new BlockDto() { index = 20, minedBy = "B" });
+            repository.Save(new BlockDto() { index = 10, minedBy = "A" });
+
+            var allBlocks = repository.GetAll();
+            Assert.Equal(2, allBlocks.Count);
+
+            Assert.Equal(10, allBlocks[0].index);
+            Assert.Equal(20,allBlocks[1].index);
         }
     }
 }

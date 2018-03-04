@@ -39,20 +39,19 @@ let applyTransactionToMiners (miners: seq<Miner>) (transaction: Transaction) =
     |> addMissingMiner (transaction.``to`` )
     |> Seq.map(fun miner -> transaction |> applyTransaction miner)
 
+let getAllTransations(repository: Repository.BlockDtoRepository) = 
+    repository.GetTransactions() 
+    |> Seq.map (DtoHelpers.transactionDtoToTransaction)
  
 let getAllMiners(repository: Repository.BlockDtoRepository ) =
     let miners = 
         repository.GetMinerDtos() 
         |> Seq.map DtoHelpers.minerDtoToMiner
 
-    let transactions = 
-        repository.GetTransactions() 
-        |> Seq.map (DtoHelpers.transactionDtoToTransaction)
-    
-    transactions
-        |> Seq.fold(fun minersState transaction -> 
-            let newMiners = applyTransactionToMiners minersState transaction
-            newMiners
-        ) miners
+    getAllTransations(repository)
+    |> Seq.fold(fun minersState transaction -> 
+        let newMiners = applyTransactionToMiners minersState transaction
+        newMiners
+    ) miners
     
     

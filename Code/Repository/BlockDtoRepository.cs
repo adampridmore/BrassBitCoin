@@ -33,7 +33,13 @@ namespace Repository
 
         public IList<BlockDto> GetAll()
         {
-            return _collection.FindSync(FilterDefinition<BlockDto>.Empty).ToList();
+            var filter = Builders<BlockDto>.Filter.Empty;
+            var sort = Builders<BlockDto>.Sort.Ascending(b => b.index);
+
+            return _collection
+                .Find(filter)
+                .Sort(sort)
+                .ToList();
         }
 
         public BlockDto TryGetLastBlock()
