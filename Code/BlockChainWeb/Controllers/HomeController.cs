@@ -6,6 +6,7 @@ using BlockChainWeb.Models;
 using Microsoft.Extensions.Configuration;
 using Repository;
 using BlockChain;
+using System.Collections.Generic;
 
 namespace BlockChainWeb.Controllers
 {
@@ -38,13 +39,13 @@ namespace BlockChainWeb.Controllers
         {
             _repository.DeleteAll();
 
-            var genesisBlock = Miner.genesisBlock;
-            SaveBlock(genesisBlock);
+            List<Types.BlockWithHash> blocks = new List<Types.BlockWithHash>();
+            blocks.Add(Miner.genesisBlock);
+            blocks.Add(Miner.newBlock("Adam", "", blocks.Last()));
+            blocks.Add(Miner.newBlock("Bob", "", blocks.Last()));
+            blocks.Add(Miner.newBlock("Adam", "Transaction,Adam,Eve,2", blocks.Last()));
 
-            Miner.blockchain(5, "Adam", genesisBlock)
-                .AsQueryable()
-                .ToList()
-                .ForEach(SaveBlock);
+            blocks.ForEach(SaveBlock);
 
             return Redirect("~/Home/About");
         }

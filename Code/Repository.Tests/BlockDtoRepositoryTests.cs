@@ -117,8 +117,6 @@ namespace Repository.UnitTests
             Assert.Null(transaction);
         }
 
-
-
         [Fact]
         public void TryParseLine()
         {
