@@ -39,11 +39,12 @@ namespace BlockChainWeb.Controllers
         {
             _repository.DeleteAll();
 
-            List<Types.BlockWithHash> blocks = new List<Types.BlockWithHash>();
+            var blocks = new List<Types.BlockWithHash>();
+
             blocks.Add(Miner.genesisBlock);
-            blocks.Add(Miner.newBlock("Adam", "", blocks.Last()));
-            blocks.Add(Miner.newBlock("Bob", "", blocks.Last()));
-            blocks.Add(Miner.newBlock("Adam", "Transaction,Adam,Eve,2", blocks.Last()));
+            blocks.Add(Miner.newBlock("Bob", "Hello", blocks.Last()));
+            blocks.Add(Miner.newBlock("Adam", "Transaction,Adam,Eve,1", blocks.Last()));
+            blocks.Add(Miner.newBlock("Adam", "Hello", blocks.Last()));
 
             blocks.ForEach(SaveBlock);
 
