@@ -14,7 +14,7 @@ The challenge it to mine and create some Yorkshire-BrassBitCoins.
 Try and generate the hash for the genesis coin. See _Yorkshire_BrassBitCoin_BlockChain_Specification_ for details on the genesis coin and how to generate the hash.
 
 # Step 2 - Mine a new coin / block
-Try and generate a new coin that has the genesis block hash as the parent hash value. It's a case of tring different _nonce_ values until you fine a valid hash that starts with four 0's. Typically it takes a few thousand attempts. 
+Try and generate a new coin that has the genesis block hash as the parent hash value. It's a case of trying different _nonce_ values until you fine a valid hash that starts with four 0's. Typically it takes a few thousand attempts. 
 
 Use you name as the _minedBy_ value - so we can tell who's mined what. You can put anything in the _data_ value (such as _'hello'_, we're not going to use it yet.)
 
@@ -41,7 +41,7 @@ https://yorkshire-brassbitcoin.azurewebsites.net/Blocks/BlockChain
 
 Now mine another coin, but this time we'll add some transactions to the _data_ field. See the specification for the format of this.
 
-One not give one of your coins to 'Adam'. I'm sure he'll appreciate it. Set the _from_ = [your miner name]), _to_ = 'Adam' and _amount_ = 1. Upload it, and you should see it in the last block chain, and in the transactions here:
+Why not give one of your coins to 'Adam'. I'm sure he'll appreciate it. Set the _from_ = [your miner name]), _to_ = 'Adam' and _amount_ = 1. Upload it, and you should see it in the last block chain, and in the transactions here:
 
 https://yorkshire-brassbitcoin.azurewebsites.net/Blocks/Transactions
 
