@@ -62,7 +62,7 @@ let ``Dto to transaction``()=
 
     Assert.Equal("myFrom", transaction.from)
     Assert.Equal("myTo", transaction.``to``)
-    Assert.Equal(123, transaction.ammount)
+    Assert.Equal(123, transaction.amount)
     Assert.Equal(100, transaction.blockIndex)
 
     

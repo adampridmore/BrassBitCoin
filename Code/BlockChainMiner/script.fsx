@@ -23,7 +23,7 @@ let transaction =
   {
     from ="Betty";
     ``to`` = "Bob";
-    ammount = 10
+    amount = 10
   }
 
 let addMissingMiner name (miners: seq<Miner>)=

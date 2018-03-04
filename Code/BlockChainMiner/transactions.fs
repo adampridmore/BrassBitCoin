@@ -3,18 +3,18 @@
 open BlockChain.Types
 
 let transactionToString (t:Transaction) = 
-    sprintf "Transaction,%s,%s,%d" t.from t.``to`` t.ammount
+    sprintf "Transaction,%s,%s,%d" t.from t.``to`` t.amount
 
 let private partsToTransaction a b c blockIndex = 
-    let (s, ammount) = System.Int32.TryParse(c)
+    let (s, amount) = System.Int32.TryParse(c)
 
-    match s, ammount with
+    match s, amount with
     | false, _ -> None
-    | true, ammount -> 
+    | true, amount -> 
         Some({
                 from = a
                 ``to``= b
-                ammount = ammount
+                amount = amount
                 blockIndex=blockIndex
             })
 
@@ -29,8 +29,8 @@ let parseSingleTransaction (txt:string) (blockIndex: int) =
 let applyTransaction (miner:Miner) (transaction:Transaction) =
     match transaction.from, transaction.``to`` with
     | f, t when f = miner.name && t = miner.name -> miner
-    | _, t when t = miner.name -> {miner with balance = miner.balance + transaction.ammount}
-    | f, _ when f = miner.name -> {miner with balance = miner.balance - transaction.ammount}
+    | _, t when t = miner.name -> {miner with balance = miner.balance + transaction.amount}
+    | f, _ when f = miner.name -> {miner with balance = miner.balance - transaction.amount}
     | _,_ -> miner
 
 

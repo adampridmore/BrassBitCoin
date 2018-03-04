@@ -20,7 +20,7 @@ type IsValidBlock =
 type Transaction = {
     from: string
     ``to``: string
-    ammount: int
+    amount: int
     blockIndex: int
 }
 

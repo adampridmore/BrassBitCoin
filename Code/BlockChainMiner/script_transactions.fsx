@@ -7,14 +7,14 @@ open BlockChain.Types
 open BlockChain.Transaction
 
 let t = {
-    from = "Adam"; ``to``= "Dave"; ammount = 100
+    from = "Adam"; ``to``= "Dave"; amount = 100
 }
 
 t |> transactionToString |> parseTransaction
 
 let miner = {name= "Adam"; balance=10};
 let transaction = {
-    from = "Dave"; ``to``= "Dave"; ammount = 100
+    from = "Dave"; ``to``= "Dave"; amount = 100
 }
 
 transaction |> applyTransaction miner

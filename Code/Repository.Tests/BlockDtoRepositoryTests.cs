@@ -111,7 +111,7 @@ namespace Repository.UnitTests
             Assert.Equal("Adam", transactions[0].from);
             Assert.Equal("Dave", transactions[0].to);
             Assert.Equal(1, transactions[0].blockIndex);
-            Assert.Equal(1, transactions[0].ammount);
+            Assert.Equal(1, transactions[0].amount);
 
         }
 
@@ -130,7 +130,7 @@ namespace Repository.UnitTests
 
             Assert.Equal("Adam", transaction.from);
             Assert.Equal("Dave", transaction.to);
-            Assert.Equal(123, transaction.ammount);
+            Assert.Equal(123, transaction.amount);
         }
 
         [Fact]
@@ -142,7 +142,7 @@ namespace Repository.UnitTests
 
 
         [Fact]
-        public void TryParseInvalidLine_invalid_ammount()
+        public void TryParseInvalidLine_invalid_amount()
         {
             var transaction = BlockDtoRepository.TryParseLine("Transaction,Adam,Dave,1.2", new BlockDto());
             Assert.Null(transaction);

@@ -112,12 +112,12 @@ namespace Repository
                 return null;
             }
 
-            if (!int.TryParse(lines[3], out int ammount))
+            if (!int.TryParse(lines[3], out int amount))
             {
                 return null;
             }
 
-            return new TransactionDto(lines[1], lines[2], ammount, block.index);
+            return new TransactionDto(lines[1], lines[2], amount, block.index);
         }
     }
 }

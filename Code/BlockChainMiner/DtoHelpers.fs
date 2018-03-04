@@ -35,7 +35,7 @@ let transactionDtoToTransaction (dto: TransactionDto) =
     {
         from = dto.from;
         ``to`` = dto.``to``;
-        ammount = dto.ammount;
+        amount = dto.amount;
         blockIndex = dto.blockIndex
     }
 
