@@ -10,7 +10,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlockChainWeb", "BlockChain
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BE7A2678-B4A8-4FA1-B50D-65C736B3ADAB}"
 	ProjectSection(SolutionItems) = preProject
-		block_chain_spec.txt = block_chain_spec.txt
+		..\hash_code.md = ..\hash_code.md
+		..\README.md = ..\README.md
+		..\Yorkshire_BrassBitCoin_BlockChain_Specification.md = ..\Yorkshire_BrassBitCoin_BlockChain_Specification.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository.Tests", "Repository.Tests\Repository.Tests.csproj", "{43908EB2-E129-4C53-BB7D-3B5A375EB078}"
