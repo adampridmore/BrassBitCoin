@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
 
 namespace BlockChainWeb.Controllers
 {
@@ -12,20 +14,59 @@ namespace BlockChainWeb.Controllers
         {
             this.repository = repository;
         }
-        public IActionResult Get([FromQuery] bool latest)
+        public IActionResult Get([FromHeader(Name = "Accept")] string accept, [FromQuery] bool latest = true)
         {
-            if (latest != true)
+            IList<Repository.Dto.BlockDto> blockDtos;
+            if (latest)
             {
-                return BadRequest("latest query parameter must be specified and set to true");
+                blockDtos = GetLatest();
+            }
+            else
+            {
+                blockDtos = GetAll(accept);
             }
 
+            if (accept.Contains("application/json"))
+            {
+                return Json(blockDtos
+                        .Select(BlockDtoToBlockWebModel)
+                        .ToList());
+            }
+            else
+            {
+                var lines = blockDtos
+                     .Select(BlockChain.DtoHelpers.DtoToBlock)
+                     .Select(BlockChain.MinerHelpers.sprintBlock)
+                     .ToList();
+
+                var text = string.Join("\n", lines);
+
+                return Content(text);
+            }
+        }
+
+        private IList<Repository.Dto.BlockDto> GetAll(string accept)
+        {
+            return repository.GetAll();
+        }
+
+        private IList<Repository.Dto.BlockDto> GetLatest()
+        {
             var block = repository.TryGetLastBlock();
             if (block == null)
             {
                 throw new System.ApplicationException("No blocks");
             }
 
-            var blockWebModel = new Models.BlockWebModel
+            return new List<Repository.Dto.BlockDto>
+            {
+                block
+            };
+        }
+
+        private static Models.BlockWebModel BlockDtoToBlockWebModel(Repository.Dto.BlockDto block)
+        {
+            return new Models.BlockWebModel
             {
                 index = block.index,
                 minedBy = block.minedBy,
@@ -34,11 +75,6 @@ namespace BlockChainWeb.Controllers
                 previousHash = block.previousHash,
                 hash = block.hash
             };
-
-            return Json(new List<Models.BlockWebModel>
-            {
-                blockWebModel
-            });
         }
     }
 }

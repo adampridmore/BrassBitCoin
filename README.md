@@ -61,3 +61,16 @@ https://yorkshire-brassbitcoin.azurewebsites.net/Blocks/Transactions
 1. Calculate the miner balances from the block. Iterate through the blocks giving +1 coin to each miner for each block they have mined.
 1. And Apply all the transactions in the blockchain to the balances for each miner.
 1. ...
+
+# REST API
+
+## Return the latest block
+
+https://yorkshire-brassbitcoin.azurewebsites.net/api/blocks?latest=true
+
+## Return all the blocks 
+
+https://yorkshire-brassbitcoin.azurewebsites.net/api/blocks?latest=false
+
+Note: If you pass an _Accept_ header of "application/json" the above endpoints return data in the JSON format.
+
