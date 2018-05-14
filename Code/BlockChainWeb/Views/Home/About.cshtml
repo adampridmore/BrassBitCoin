@@ -6,10 +6,41 @@
 
 <p>Use this area to provide additional information.</p>
 
-<form method="POST" action="ResetData">
-    <input type="submit" value="Reset data">
-</form>
+<ul class="list-unstyled">
+    <li class="list-group-item">
+        <form method="POST" action="ResetData">
+            <input type="submit" value="Reset data">
+        </form>
+    </li>
+    <li class="list-group-item">
+        <form method="POST" action="ResetToValidBlockchain1">
+            <input type="submit" value="Reset to valid blockchain 1">
+        </form>
+    </li>
+    <li class="list-group-item">
+        <form method="POST" action="ResetToValidBlockchain2">
+            <input type="submit" value="Reset to valid blockchain 2">
+        </form>
+    </li>
+    <li class="list-group-item">
+        <form method="POST" action="ResetToInvalidBlockchain">
+            <input type="submit" value="Reset to invalid blockchain">
+        </form>
+    </li>
 
-<form method="POST" action="MineAndSaveBlock">
-    <input type="submit" value="Mine and save block">
-</form>
+
+    <li class="list-group-item">
+        <form method="POST" action="MineAndSaveBlock">
+            <input type="submit" value="Mine and save block">
+        </form>
+    </li>
+</ul>
+
+<ul class="list-unstyled">
+    <li class="list-group-item">
+        <a href="~/api/blocks?latest=false">All blocks</a>
+    </li>
+</ul>
+
+
+

@@ -16,7 +16,7 @@ namespace BlockChainWeb.Controllers
         private readonly BlockDtoRepository _repository;
 
         public HomeController(IConfiguration Configuration, Repository.BlockDtoRepository repository)
-        {
+            {
             _configuration = Configuration;
             this._repository = repository;
         }
@@ -67,6 +67,67 @@ namespace BlockChainWeb.Controllers
                 .ToList()
                 .ForEach(SaveBlock);
 
+            return Redirect("~/Home/About");
+        }
+
+        [HttpPost]
+        public IActionResult ResetToValidBlockchain1()
+        {
+            _repository.DeleteAll();
+
+            var blocks = new List<Types.BlockWithHash>();
+
+            blocks.Add(Miner.genesisBlock);
+            blocks.Add(Miner.newBlock("Bob", "", blocks.Last()));
+            blocks.Add(Miner.newBlock("Bob", "Transaction,Bob,Adam,2", blocks.Last()));
+            blocks.Add(Miner.newBlock("Bob", "Transaction,Adam,Eve,1", blocks.Last()));
+            blocks.Add(Miner.newBlock("Adam", "Transaction,Adam,Eve,1", blocks.Last()));
+
+            blocks.ForEach(SaveBlock);
+
+            return CreateRedirectToAboutPage();
+        }
+
+        public IActionResult ResetToValidBlockchain2()
+        {
+            _repository.DeleteAll();
+
+            var blocks = new List<Types.BlockWithHash>();
+
+            blocks.Add(Miner.genesisBlock);
+            blocks.Add(Miner.newBlock("Fred", "Transaction,Fred,Adam,1", blocks.Last()));
+            blocks.Add(Miner.newBlock("Adam", "Transaction,Adam,Sally,2", blocks.Last()));
+
+            blocks.ForEach(SaveBlock);
+
+            return CreateRedirectToAboutPage();
+        }
+
+        [HttpPost]
+        public IActionResult ResetToInvalidBlockchain()
+        {
+            _repository.DeleteAll();
+
+            var blocks = new List<Types.BlockWithHash>();
+
+            blocks.Add(Miner.genesisBlock);
+            blocks.Add(Miner.newBlock("Alice", "", blocks.Last()));
+            blocks.Add(Miner.newBlock("Alice", "Transaction,Alice,Bob,2", blocks.Last()));
+            blocks.Add(Miner.newBlock("Alice", "Transaction,Alice,Bob,1", blocks.Last()));
+            blocks.Add(Miner.newBlock("Mallory", "Transaction,Bob,Mallory,2", blocks.Last()));
+
+            var blocksToSave = blocks.Select(DtoHelpers.BlockToDto).ToList();
+
+            // Not a valid hash!
+            blocksToSave.Last().hash = "0000FFD633A14A7C68F70A1158452BCCB9E8D994B509149DE57C1D11D0199B32";
+
+            blocksToSave.ForEach(_repository.Save);
+
+            return CreateRedirectToAboutPage();
+        }
+
+        private IActionResult CreateRedirectToAboutPage()
+        {
             return Redirect("~/Home/About");
         }
 
