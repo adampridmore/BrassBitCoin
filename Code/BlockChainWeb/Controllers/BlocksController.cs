@@ -69,6 +69,8 @@ namespace BlockChainWeb.Controllers
         [HttpPost]
         public ActionResult Upload([FromBody] PostUploadBlock block)
         {
+            System.Threading.Thread.Sleep(1000);
+
             var validationErrors = ValidateBlock(block);
             if (validationErrors.Any())
             {
